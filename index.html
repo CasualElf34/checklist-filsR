@@ -13,76 +13,106 @@
   --font-h:'Syne',sans-serif;--font-m:'Space Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);min-height:100vh}
 body::before{content:'';position:fixed;inset:0;z-index:0;
   background-image:linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px);
   background-size:48px 48px;pointer-events:none}
 body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);
-  width:800px;height:400px;background:radial-gradient(ellipse,rgba(139,92,246,.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+  width:800px;height:400px;background:radial-gradient(ellipse,rgba(139,92,246,.08) 0%,transparent 70%);
+  pointer-events:none;z-index:0}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;position:relative;z-index:1}
 
+/* ── SETUP BANNER ── */
+#setupBanner{
+  background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.07));
+  border:1px solid rgba(245,158,11,.4);border-radius:8px;padding:24px 28px;margin-bottom:28px;
+}
+#setupBanner h2{font-family:var(--font-h);font-size:16px;font-weight:800;color:var(--amber);margin-bottom:12px}
+#setupBanner ol{font-size:12px;color:var(--text);line-height:2.2;margin-left:18px;margin-bottom:18px}
+#setupBanner code{background:var(--surface3);color:var(--cyan);padding:2px 7px;border-radius:3px;font-size:11px;font-family:var(--font-m)}
+.db-url-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.setup-field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:280px}
+.setup-field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.setup-field input{font-family:var(--font-m);font-size:11px;background:var(--surface3);
+  border:1px solid var(--border2);color:var(--text);padding:10px 14px;border-radius:4px;outline:none;transition:border-color .2s}
+.setup-field input:focus{border-color:var(--amber)}
+.setup-field input::placeholder{color:var(--muted)}
+.btn-setup{font-family:var(--font-m);font-size:11px;font-weight:700;letter-spacing:1px;
+  padding:11px 22px;background:var(--amber);color:#000;border:none;border-radius:4px;
+  cursor:pointer;transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.btn-setup:hover{background:#fbbf24;box-shadow:0 0 16px rgba(245,158,11,.4)}
+.setup-hint{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.8}
+
+/* ── SYNC STATUS ── */
+#syncStatus{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;padding:8px 14px;background:var(--surface);
+  border:1px solid var(--border);border-radius:4px;width:fit-content}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:all .3s}
+.sync-dot.connected{background:var(--green);box-shadow:0 0 6px var(--green);animation:pdot 2s ease infinite}
+.sync-dot.error{background:var(--red);box-shadow:0 0 6px var(--red)}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
+
 /* HEADER */
-header{padding:48px 0 36px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:36px}
+header{padding:44px 0 32px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:28px}
 .badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:4px;text-transform:uppercase;
-  color:var(--cyan);border:1px solid rgba(0,229,255,.3);padding:5px 14px;border-radius:2px;margin-bottom:18px}
+  color:var(--cyan);border:1px solid rgba(0,229,255,.3);padding:5px 14px;border-radius:2px;margin-bottom:16px}
 .badge::before{content:'●';animation:blink 2s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-h1{font-family:var(--font-h);font-size:clamp(2.8rem,7vw,5rem);font-weight:800;letter-spacing:-3px;color:#fff;line-height:.95;margin-bottom:10px}
+h1{font-family:var(--font-h);font-size:clamp(2.6rem,6vw,4.5rem);font-weight:800;letter-spacing:-3px;color:#fff;line-height:.95;margin-bottom:10px}
 h1 em{color:var(--cyan);font-style:normal}
 .tagline{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase}
 
 /* WHO BAR */
 .who-bar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border2);
-  border-radius:6px;padding:14px 20px;margin-bottom:24px;flex-wrap:wrap}
-.who-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:4px}
+  border-radius:6px;padding:14px 20px;margin-bottom:20px;flex-wrap:wrap}
+.who-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .member-btn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:7px 16px;border-radius:4px;
   cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
 .member-btn[data-m="Lucas"]{color:#00e5ff;border-color:rgba(0,229,255,.3)}
 .member-btn[data-m="Mael"]{color:#8b5cf6;border-color:rgba(139,92,246,.3)}
 .member-btn[data-m="Maxime"]{color:#10b981;border-color:rgba(16,185,129,.3)}
 .member-btn[data-m="Anthony"]{color:#f59e0b;border-color:rgba(245,158,11,.3)}
-.member-btn.active[data-m="Lucas"]{background:rgba(0,229,255,.15);border-color:#00e5ff;box-shadow:0 0 16px rgba(0,229,255,.2)}
-.member-btn.active[data-m="Mael"]{background:rgba(139,92,246,.15);border-color:#8b5cf6;box-shadow:0 0 16px rgba(139,92,246,.2)}
-.member-btn.active[data-m="Maxime"]{background:rgba(16,185,129,.15);border-color:#10b981;box-shadow:0 0 16px rgba(16,185,129,.2)}
-.member-btn.active[data-m="Anthony"]{background:rgba(245,158,11,.15);border-color:#f59e0b;box-shadow:0 0 16px rgba(245,158,11,.2)}
+.member-btn.active[data-m="Lucas"]{background:rgba(0,229,255,.15);border-color:#00e5ff;box-shadow:0 0 14px rgba(0,229,255,.2)}
+.member-btn.active[data-m="Mael"]{background:rgba(139,92,246,.15);border-color:#8b5cf6;box-shadow:0 0 14px rgba(139,92,246,.2)}
+.member-btn.active[data-m="Maxime"]{background:rgba(16,185,129,.15);border-color:#10b981;box-shadow:0 0 14px rgba(16,185,129,.2)}
+.member-btn.active[data-m="Anthony"]{background:rgba(245,158,11,.15);border-color:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.2)}
 .who-name{margin-left:auto;font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--muted)}
 .who-name span{color:#fff}
 
 /* LEADERBOARD */
-.leaderboard{background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:20px 24px;margin-bottom:24px}
+.leaderboard{background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:20px 24px;margin-bottom:20px}
 .lb-title{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .lb-rows{display:flex;flex-direction:column;gap:10px}
 .lb-row{display:flex;align-items:center;gap:12px}
-.lb-rank{font-size:11px;color:var(--muted);width:18px;text-align:center;flex-shrink:0}
-.lb-rank.first{color:var(--amber);font-weight:700;font-size:14px}
+.lb-rank{font-size:12px;color:var(--muted);width:20px;text-align:center;flex-shrink:0}
+.lb-rank.top{color:var(--amber)}
 .lb-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:10px;font-weight:700;font-family:var(--font-h);flex-shrink:0;border:2px solid}
-.lb-name{font-size:12px;color:var(--text);flex-shrink:0;width:72px}
+.lb-name{font-size:12px;color:var(--text);flex-shrink:0;width:70px}
 .lb-bar-wrap{flex:1;background:var(--surface3);height:6px;border-radius:3px;overflow:hidden}
 .lb-bar{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.lb-count{font-size:11px;color:var(--muted);width:58px;text-align:right;flex-shrink:0}
+.lb-count{font-size:11px;width:60px;text-align:right;flex-shrink:0}
 
 /* GLOBAL PROGRESS */
 .global-progress{background:var(--surface);border:1px solid var(--border2);border-radius:6px;
-  padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px}
+  padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .gp-label{font-family:var(--font-h);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.gp-bar-wrap{flex:1;background:var(--surface3);height:8px;border-radius:4px;overflow:hidden}
+.gp-bar-wrap{flex:1;min-width:120px;background:var(--surface3);height:8px;border-radius:4px;overflow:hidden}
 .gp-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:4px;transition:width .5s;width:0}
-.gp-pct{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--cyan);white-space:nowrap;min-width:110px;text-align:right}
+.gp-pct{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--cyan);white-space:nowrap}
 
 /* CONTROLS */
-.controls{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.controls{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .btn{font-family:var(--font-m);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
   padding:8px 14px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);
   cursor:pointer;border-radius:3px;transition:all .2s}
 .btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.05)}
+.btn-danger:hover{border-color:var(--red)!important;color:var(--red)!important}
 
 /* SECTIONS */
-.section{margin-bottom:18px;border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .3s}
+.section{margin-bottom:14px;border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .3s}
 .section:hover{border-color:var(--border2)}
-.sec-head{display:flex;align-items:center;gap:12px;padding:13px 18px;background:var(--surface);
-  cursor:pointer;user-select:none;transition:background .2s}
+.sec-head{display:flex;align-items:center;gap:12px;padding:13px 18px;background:var(--surface);cursor:pointer;user-select:none;transition:background .2s}
 .sec-head:hover{background:var(--surface2)}
 .sec-icon{font-size:17px;width:26px;text-align:center;flex-shrink:0}
 .sec-title{font-family:var(--font-h);font-size:14px;font-weight:700;color:#fff;flex:1}
@@ -98,20 +128,16 @@ h1 em{color:var(--cyan);font-style:normal}
 .sec-body{overflow:hidden;max-height:5000px;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
 .section.collapsed .sec-body{max-height:0}
 
-/* SUB */
+/* SUBSECTION */
 .subsec{padding:10px 18px 6px;border-top:1px solid var(--border)}
-.subsec-title{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:var(--muted);
-  margin-bottom:8px;padding-bottom:5px;border-bottom:1px dashed var(--border)}
+.subsec-title{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-bottom:8px;padding-bottom:5px;border-bottom:1px dashed var(--border)}
 
 /* ITEM */
-.item{display:flex;align-items:flex-start;gap:10px;padding:8px 4px;
-  border-bottom:1px solid rgba(255,255,255,.025);cursor:pointer;transition:all .15s;border-radius:3px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.025);cursor:pointer;transition:all .15s;border-radius:3px}
 .item:last-child{border-bottom:none}
 .item:hover{background:rgba(255,255,255,.025);padding-left:10px}
-.chkbox{width:17px;height:17px;border:1.5px solid var(--border2);border-radius:3px;flex-shrink:0;
-  margin-top:2px;display:flex;align-items:center;justify-content:center;background:var(--surface3);
-  transition:all .2s;font-size:10px;color:#fff;font-weight:700;font-family:sans-serif}
-.item.done .chkbox{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(16,185,129,.4)}
+.chkbox{width:17px;height:17px;border:1.5px solid var(--border2);border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;background:var(--surface3);transition:all .2s;font-size:10px;color:#fff;font-weight:700;font-family:sans-serif}
+.item.done .chkbox{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(16,185,129,.35)}
 .item-right{flex:1;min-width:0}
 .item-text{font-size:12px;color:var(--text);line-height:1.5;transition:all .2s}
 .item.done .item-text{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(90,90,128,.5)}
@@ -124,19 +150,15 @@ h1 em{color:var(--cyan);font-style:normal}
 .item-date{font-size:9px;color:var(--muted)}
 
 /* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:100;
-  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
 .overlay.show{opacity:1;pointer-events:all}
-.modal{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:28px;
-  width:min(440px,92vw);transform:translateY(20px) scale(.97);transition:transform .25s}
+.modal{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:28px;width:min(440px,92vw);transform:translateY(16px) scale(.97);transition:transform .25s}
 .overlay.show .modal{transform:none}
 .modal-title{font-family:var(--font-h);font-size:17px;font-weight:800;color:#fff;margin-bottom:8px}
-.modal-task{font-size:11px;color:var(--muted);margin-bottom:22px;line-height:1.7;
-  border-left:2px solid var(--border2);padding-left:12px}
+.modal-task{font-size:11px;color:var(--muted);margin-bottom:22px;line-height:1.7;border-left:2px solid var(--border2);padding-left:12px}
 .modal-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .modal-members{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
-.modal-mbtn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:10px 20px;border-radius:4px;
-  cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
+.modal-mbtn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:10px 20px;border-radius:4px;cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
 .modal-mbtn[data-m="Lucas"]{color:#00e5ff;border-color:rgba(0,229,255,.3)}
 .modal-mbtn[data-m="Mael"]{color:#8b5cf6;border-color:rgba(139,92,246,.3)}
 .modal-mbtn[data-m="Maxime"]{color:#10b981;border-color:rgba(16,185,129,.3)}
@@ -146,46 +168,63 @@ h1 em{color:var(--cyan);font-style:normal}
 .modal-mbtn.sel[data-m="Maxime"]{background:rgba(16,185,129,.15);border-color:#10b981}
 .modal-mbtn.sel[data-m="Anthony"]{background:rgba(245,158,11,.15);border-color:#f59e0b}
 .modal-actions{display:flex;gap:10px;align-items:center}
-.modal-cancel{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:transparent;
-  border:1px solid var(--border2);color:var(--muted);border-radius:3px;cursor:pointer;transition:all .2s}
+.modal-cancel{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:transparent;border:1px solid var(--border2);color:var(--muted);border-radius:3px;cursor:pointer;transition:all .2s}
 .modal-cancel:hover{border-color:var(--red);color:var(--red)}
-.modal-confirm{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:var(--green);
-  border:none;color:#fff;font-weight:700;border-radius:3px;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.modal-confirm{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:var(--green);border:none;color:#fff;font-weight:700;border-radius:3px;cursor:pointer;transition:all .2s}
 .modal-confirm:hover{background:#0ea271;box-shadow:0 0 12px rgba(16,185,129,.3)}
-.modal-uncheck{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:transparent;
-  border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:3px;cursor:pointer;transition:all .2s;margin-right:auto}
+.modal-uncheck{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:transparent;border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:3px;cursor:pointer;transition:all .2s;margin-right:auto}
 .modal-uncheck:hover{background:rgba(239,68,68,.1)}
 
 /* TOAST */
-.toast{position:fixed;bottom:28px;right:28px;background:var(--surface2);border:1px solid var(--border2);
-  color:var(--text);font-family:var(--font-h);font-size:13px;font-weight:600;padding:12px 20px;
-  border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;
-  transition:all .35s cubic-bezier(.34,1.56,.64,1);z-index:200;pointer-events:none;max-width:300px}
+.toast{position:fixed;bottom:28px;right:28px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--font-h);font-size:13px;font-weight:600;padding:12px 20px;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);z-index:200;pointer-events:none;max-width:300px}
 .toast.show{transform:none;opacity:1}
 
 /* LOADING */
 .loading{text-align:center;padding:50px 20px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase}
-.spinner{width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--cyan);
-  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+.spinner{width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* CONFETTI */
 @keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .cf{position:fixed;width:7px;height:7px;border-radius:1px;pointer-events:none;z-index:9999;animation:cf 2s ease forwards}
-
-@media(max-width:600px){
-  .global-progress{flex-wrap:wrap}.gp-pct{min-width:auto}
-  h1{letter-spacing:-1px}.who-bar{gap:8px}
-}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <!-- ══ SETUP BANNER ══ -->
+  <div id="setupBanner">
+    <h2>⚙️ Dernière étape — Active la Realtime Database Firebase</h2>
+    <ol>
+      <li>Va sur <code>console.firebase.google.com</code> → ton projet <code>yplaza-b2</code></li>
+      <li>Dans le menu gauche : <strong>Build › Realtime Database</strong></li>
+      <li>Clique <strong>"Créer une base de données"</strong> → choisir la région <strong>europe-west1</strong> → <strong>Mode test</strong></li>
+      <li>Tu verras une URL du type : <code>https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app</code></li>
+      <li>Colle cette URL ci-dessous :</li>
+    </ol>
+    <div class="db-url-row">
+      <div class="setup-field">
+        <label>Database URL</label>
+        <input id="cfg-dbUrl" placeholder="https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app" />
+      </div>
+      <button class="btn-setup" onclick="connectFirebase()">🔥 Connecter</button>
+    </div>
+    <p class="setup-hint">
+      ✅ Toute la config Firebase est déjà intégrée — il manque juste cette URL.<br>
+      💾 Sera sauvegardée dans le navigateur, chaque membre entre l'URL une seule fois.<br>
+      🔒 Mode test = accès ouvert 30 jours. Pense à sécuriser les règles Firebase avant la soutenance.
+    </p>
+  </div>
+
   <header>
     <div class="badge">Y-Plaza · Équipe B2</div>
     <h1>Y-<em>Plaza</em></h1>
-    <p class="tagline">INFRA &amp; DEV — Checklist collaborative · Lucas · Maël · Maxime · Anthony</p>
+    <p class="tagline">INFRA &amp; DEV — Checklist collaborative · Temps réel 🔴</p>
   </header>
+
+  <div id="syncStatus">
+    <div class="sync-dot" id="syncDot"></div>
+    <span id="syncLabel">Non connecté</span>
+  </div>
 
   <div class="who-bar">
     <span class="who-label">Tu es :</span>
@@ -198,7 +237,7 @@ h1 em{color:var(--cyan);font-style:normal}
 
   <div class="leaderboard">
     <div class="lb-title">🏆 Classement de l'équipe</div>
-    <div class="lb-rows" id="lbRows"><div class="loading"><div class="spinner"></div>Chargement…</div></div>
+    <div class="lb-rows" id="lbRows"><div class="loading"><div class="spinner"></div>En attente…</div></div>
   </div>
 
   <div class="global-progress">
@@ -211,9 +250,10 @@ h1 em{color:var(--cyan);font-style:normal}
     <button class="btn" onclick="expandAll()">▼ Tout déplier</button>
     <button class="btn" onclick="collapseAll()">▲ Tout replier</button>
     <button class="btn" onclick="exportMd()">⬇ Exporter .md</button>
+    <button class="btn btn-danger" onclick="resetConfig()" style="margin-left:auto;color:rgba(239,68,68,.6);border-color:rgba(239,68,68,.2)">⚙️ Reconfigurer</button>
   </div>
 
-  <div id="checklist"><div class="loading"><div class="spinner"></div>Chargement des tâches…</div></div>
+  <div id="checklist"><div class="loading"><div class="spinner"></div>En attente de Firebase…</div></div>
 </div>
 
 <!-- MODAL -->
@@ -230,7 +270,7 @@ h1 em{color:var(--cyan);font-style:normal}
     </div>
     <div class="modal-actions">
       <button class="modal-uncheck" id="btnUncheck" onclick="doUncheck()" style="display:none">✕ Décocher</button>
-      <button class="modal-cancel" onclick="closeModal()">Annuler</button>
+      <button class="modal-cancel"  onclick="closeModal()">Annuler</button>
       <button class="modal-confirm" onclick="doConfirm()">Confirmer ✓</button>
     </div>
   </div>
@@ -238,66 +278,94 @@ h1 em{color:var(--cyan);font-style:normal}
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, remove, onValue }
+                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+/* ══════════ CONFIG — déjà remplie avec tes clés ══════════ */
+const BASE_CONFIG = {
+  apiKey:            "AIzaSyA5oBWHiNc8RKthanGn8aP_Ov-hIALDPmo",
+  authDomain:        "yplaza-b2.firebaseapp.com",
+  projectId:         "yplaza-b2",
+  storageBucket:     "yplaza-b2.firebasestorage.app",
+  messagingSenderId: "927837405691",
+  appId:             "1:927837405691:web:137be5c192cfcc69320b5e",
+  measurementId:     "G-S263CV9BRZ"
+};
+
+/* ══════════ CHECKLIST DATA ══════════ */
 const DATA=[{id:"conception",icon:"🎯",title:"Conception du projet",tag:"dev",subs:[{title:"Définir le besoin",items:["Identifier les utilisateurs (Client, Commercial, Admin)","Définir les fonctionnalités principales","Rédiger une mini documentation fonctionnelle"]},{title:"Architecture",items:["Backend orienté services (API REST)","Séparation Frontend / Backend","Structure claire du projet","Respect des principes SOLID / DRY / KISS"]}]},{id:"bdd",icon:"🗄️",title:"Base de données",tag:"dev",subs:[{title:"Modélisation",items:["Table Utilisateurs","Table Agences","Table Biens immobiliers","Table Transactions","Table Demandes clients","Table Statistiques (bonus)"]},{title:"SQL avancé",items:["CRUD complet (Create, Read, Update, Delete)","Requêtes avec jointures","Index sur colonnes importantes","Requêtes statistiques (top ventes, zones populaires)"]}]},{id:"backend",icon:"⚙️",title:"Backend (API REST)",tag:"dev",subs:[{title:"Authentification",items:["Inscription (POST /register)","Connexion (POST /login)","Gestion des rôles : Admin / Commercial / Client","Hash des mots de passe (bcrypt)"]},{title:"Endpoints Biens",items:["GET /biens — liste tous les biens","GET /biens/{id} — détail d'un bien","POST /biens — créer un bien","PUT /biens/{id} — modifier un bien","DELETE /biens/{id} — supprimer un bien"]},{title:"Bonnes pratiques",items:["Validation des données entrantes","Gestion des erreurs propre (codes HTTP corrects)","Logs applicatifs","Architecture en couches : Controller / Service / Repository"]}]},{id:"frontend",icon:"🎨",title:"Frontend",tag:"dev",subs:[{title:"Interface utilisateur",items:["Page d'accueil","Page recherche de biens","Filtres dynamiques (prix, ville, surface)","Page détail d'un bien","Dashboard agence"]},{title:"Responsive Design",items:["Compatible Desktop","Compatible Tablette","Compatible Smartphone"]},{title:"Performance",items:["Optimisation des images","Lazy loading","Appels API optimisés"]}]},{id:"data",icon:"📊",title:"Data & Analyse Python",tag:"data",subs:[{title:"Rapports de ventes",items:["Total ventes par mois","Biens les plus vendus","Prix moyen par ville","Nombre de ventes par agence"]},{title:"Analyses statistiques",items:["Identifier les zones attractives","Prévoir tendance des prix (moyenne, évolution)","Graphiques dynamiques (Chart.js ou autre)"]},{title:"Nettoyage des données",items:["Supprimer les doublons","Gérer les données manquantes","Normaliser les formats"]}]},{id:"secu",icon:"🔐",title:"Sécurité applicative",tag:"cyber",subs:[{title:"Protections essentielles",items:["Requêtes préparées (anti SQL injection)","Protection XSS (échappement des sorties)","HTTPS obligatoire","Limiter les tentatives de connexion (rate limiting)","Validation côté serveur obligatoire","CORS configuré correctement"]}]},{id:"infra",icon:"🏗️",title:"Infrastructure Réseau",tag:"infra",subs:[{title:"Windows Server & Active Directory",items:["Installer et configurer Windows Server","Mettre en place un Active Directory (AD DS)","Définir des stratégies de groupe (GPO)","Gestion des droits d'accès basée sur les rôles"]},{title:"Architecture réseau",items:["Schéma d'architecture réseau complet","Plan d'adressage IP (siège + 12 agences)","VPN/IPSec site-à-site — siège ↔ agences","Services DNS, DHCP, NAT configurés","VLAN par département"]},{title:"Sécurité réseau",items:["Mise en œuvre du pare-feu","Filtrage des flux réseau","Politique de sécurité documentée","Plan de sauvegarde et de supervision"]},{title:"Maquette & Cloud",items:["1 VM serveur configurée (HyperV / VMware / VirtualBox)","1-2 VM représentant agence et/ou siège","1 routeur configuré","Proposition solution Cloud (Azure / AWS)"]},{title:"Documentation INFRA",items:["Schéma d'architecture réseau","Plan d'adressage IP","Politique de sécurité","Guide de configuration des serveurs","Plan de sauvegarde et supervision","Guide de déploiement","Liste matériel et budgétisation"]}]},{id:"collab",icon:"🤝",title:"Versioning & Collaboration",tag:"collab",subs:[{title:"Git & GitHub",items:["Repository Git propre et bien structuré","Branches organisées (main / dev / feature/*)","Commits clairs et descriptifs","README complet (installation, usage, architecture)"]},{title:"Gestion de projet",items:["Trello / Notion — tableau de suivi","Planification des tâches et sprints","Suivi de l'avancement régulier"]}]},{id:"doc",icon:"📄",title:"Documentation DEV",tag:"dev",subs:[{title:"Livrables documentaires",items:["Diagramme UML (classes, séquence)","Schéma de base de données (MCD / MLD)","Description des endpoints API","Choix techniques justifiés","Documentation fonctionnelle (user stories)","Guide de déploiement"]}]}];
 
 const MEMBERS=["Lucas","Mael","Maxime","Anthony"];
 const COLORS={Lucas:"#00e5ff",Mael:"#8b5cf6",Maxime:"#10b981",Anthony:"#f59e0b"};
 const INIT={Lucas:"LU",Mael:"MA",Maxime:"MX",Anthony:"AN"};
 const MEDALS=["🥇","🥈","🥉","4️⃣"];
+const DISPLAY={Lucas:"Lucas",Mael:"Maël",Maxime:"Maxime",Anthony:"Anthony"};
 
-let checks={};
-let me=null;
-let pendingId=null;
-let pendingMember=null;
-let loaded=false;
+let checks={}, me=null, pendingId=null, pendingMember=null, db=null;
+const iid=(s,si,ii)=>`${s}__${si}__${ii}`;
 
-const iid=(s,si,ii)=>`${s}-${si}-${ii}`;
-
-/* STORAGE — uses localStorage as fallback when window.storage unavailable */
-async function loadChecks(){
-  try{
-    if(window.storage){
-      const r=await window.storage.get('yplaza-checks',true);
-      if(r&&r.value) checks=JSON.parse(r.value);
-    } else {
-      const s=localStorage.getItem('yplaza-checks');
-      if(s) checks=JSON.parse(s);
-    }
-  }catch(e){
-    try{const s=localStorage.getItem('yplaza-checks');if(s)checks=JSON.parse(s);}catch(e2){checks={};}
+/* ══════════ FIREBASE CONNECT ══════════ */
+function connectFirebase() {
+  const url = document.getElementById('cfg-dbUrl').value.trim();
+  if (!url || !url.startsWith('https://')) {
+    showToast('https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app/'); return;
   }
-  loaded=true;
+  localStorage.setItem('yplaza-dbUrl', url);
+  startFirebase(url);
+}
+window.connectFirebase = connectFirebase;
+
+function startFirebase(databaseURL) {
+  try {
+    const app = initializeApp({ ...BASE_CONFIG, databaseURL });
+    db = getDatabase(app);
+    setSync('connecting', 'Connexion à Firebase…');
+
+    onValue(ref(db, 'yplaza/checks'), (snap) => {
+      checks = snap.val() || {};
+      document.getElementById('setupBanner').style.display = 'none';
+      setSync('connected', 'Firebase connecté — sync temps réel 🟢');
+      render();
+    }, (err) => {
+      setSync('error', 'Erreur : ' + err.message);
+      showToast('❌ ' + err.message);
+    });
+  } catch(e) {
+    setSync('error', 'Erreur de config');
+    showToast('❌ ' + e.message);
+  }
 }
 
-async function saveChecks(){
-  const val=JSON.stringify(checks);
-  try{if(window.storage) await window.storage.set('yplaza-checks',val,true);}catch(e){}
-  try{localStorage.setItem('yplaza-checks',val);}catch(e){}
+function resetConfig() {
+  localStorage.removeItem('yplaza-dbUrl');
+  document.getElementById('setupBanner').style.display = 'block';
+  showToast('⚙️ URL réinitialisée');
+}
+window.resetConfig = resetConfig;
+
+/* ══════════ RENDER ══════════ */
+function render() {
+  renderChecklist(); renderLeaderboard(); renderGlobal();
 }
 
-/* RENDER */
-function render(){
-  if(!loaded) return;
-  renderChecklist();
-  renderLeaderboard();
-  renderGlobal();
-}
-
-function renderChecklist(){
-  const c=document.getElementById('checklist');
-  c.innerHTML='';
-  DATA.forEach(sec=>{
-    const total=sec.subs.reduce((a,s)=>a+s.items.length,0);
-    const done=sec.subs.reduce((a,s,si)=>a+s.items.filter((_,ii)=>checks[iid(sec.id,si,ii)]).length,0);
-    const el=document.createElement('div');
-    el.className='section';el.dataset.id=sec.id;
-    el.innerHTML=`
+function renderChecklist() {
+  const collapsed = new Set([...document.querySelectorAll('.section.collapsed')].map(s=>s.dataset.id));
+  const c = document.getElementById('checklist');
+  c.innerHTML = '';
+  DATA.forEach(sec => {
+    const total = sec.subs.reduce((a,s)=>a+s.items.length,0);
+    const done  = sec.subs.reduce((a,s,si)=>a+s.items.filter((_,ii)=>checks[iid(sec.id,si,ii)]).length,0);
+    const el = document.createElement('div');
+    el.className = 'section' + (collapsed.has(sec.id) ? ' collapsed' : '');
+    el.dataset.id = sec.id;
+    el.innerHTML = `
       <div class="sec-head" onclick="toggleSec('${sec.id}')">
         <span class="sec-icon">${sec.icon}</span>
         <span class="sec-title">${sec.title}</span>
         <span class="sec-tag tag-${sec.tag}">${sec.tag.toUpperCase()}</span>
-        <span class="sec-mini" id="mini-${sec.id}">${done}/${total}</span>
+        <span class="sec-mini">${done}/${total}</span>
         <span class="chevron">▼</span>
       </div>
       <div class="sec-body">
@@ -305,12 +373,15 @@ function renderChecklist(){
           <div class="subsec">
             <div class="subsec-title">${sub.title}</div>
             ${sub.items.map((item,ii)=>{
-              const id=iid(sec.id,si,ii);const ck=checks[id];
-              return `<div class="item${ck?' done':''}" id="item-${id}" onclick="clickItem('${sec.id}',${si},${ii})">
+              const id=iid(sec.id,si,ii); const ck=checks[id];
+              return `<div class="item${ck?' done':''}" onclick="clickItem('${sec.id}',${si},${ii})">
                 <div class="chkbox">${ck?'✓':''}</div>
                 <div class="item-right">
                   <div class="item-text">${item}</div>
-                  ${ck?`<div class="item-meta"><span class="item-chip chip-${ck.m}">${ck.m}</span><span class="item-date">📅 ${ck.d}</span></div>`:''}
+                  ${ck?`<div class="item-meta">
+                    <span class="item-chip chip-${ck.m}">${DISPLAY[ck.m]||ck.m}</span>
+                    <span class="item-date">📅 ${ck.d}</span>
+                  </div>`:''}
                 </div>
               </div>`;
             }).join('')}
@@ -320,91 +391,114 @@ function renderChecklist(){
   });
 }
 
-function renderLeaderboard(){
-  const scores={};MEMBERS.forEach(m=>scores[m]=0);
-  Object.values(checks).forEach(v=>{if(v&&v.m)scores[v.m]=(scores[v.m]||0)+1});
+function renderLeaderboard() {
+  const scores={}; MEMBERS.forEach(m=>scores[m]=0);
+  Object.values(checks).forEach(v=>{if(v&&v.m&&scores[v.m]!==undefined)scores[v.m]++;});
   const sorted=[...MEMBERS].sort((a,b)=>scores[b]-scores[a]);
   const max=Math.max(...Object.values(scores),1);
-  document.getElementById('lbRows').innerHTML=sorted.map((m,i)=>`
+  document.getElementById('lbRows').innerHTML = sorted.map((m,i)=>`
     <div class="lb-row">
-      <span class="lb-rank${i===0?' first':''}">${MEDALS[i]}</span>
+      <span class="lb-rank${i===0?' top':''}">${MEDALS[i]}</span>
       <div class="lb-avatar" style="background:${COLORS[m]}22;border-color:${COLORS[m]}55;color:${COLORS[m]}">${INIT[m]}</div>
-      <span class="lb-name">${m==='Mael'?'Maël':m}</span>
-      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round(scores[m]/max*100)}%;background:${COLORS[m]}"></div></div>
-      <span class="lb-count" style="color:${COLORS[m]}">${scores[m]} tâche${scores[m]>1?'s':''}</span>
+      <span class="lb-name">${DISPLAY[m]}</span>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${scores[m]?Math.max(Math.round(scores[m]/max*100),3):0}%;background:${COLORS[m]}"></div></div>
+      <span class="lb-count" style="color:${COLORS[m]}">${scores[m]} tâche${scores[m]!==1?'s':''}</span>
     </div>`).join('');
 }
 
-function renderGlobal(){
+function renderGlobal() {
   const total=DATA.reduce((a,s)=>a+s.subs.reduce((b,ss)=>b+ss.items.length,0),0);
-  const done=Object.keys(checks).length;
+  const done=Object.values(checks).filter(Boolean).length;
   const pct=Math.round(done/total*100);
   document.getElementById('gpBar').style.width=pct+'%';
   document.getElementById('gpPct').textContent=`${done} / ${total} — ${pct}%`;
-  if(done===total&&total>0){showToast('🎉 Projet 100% terminé ! GG l\'équipe !');confetti();}
+  if(done===total&&done>0){showToast('🎉 Projet 100% terminé ! GG l\'équipe !');confetti();}
 }
 
-/* INTERACTIONS */
-function setMe(name){
+/* ══════════ INTERACTIONS ══════════ */
+function setMe(name) {
   me=name;
   document.querySelectorAll('.member-btn').forEach(b=>b.classList.toggle('active',b.dataset.m===name));
-  document.getElementById('whoName').innerHTML=`Connecté : <span>${name==='Mael'?'Maël':name}</span>`;
+  document.getElementById('whoName').innerHTML=`Connecté : <span>${DISPLAY[name]}</span>`;
+  localStorage.setItem('yplaza-me', name);
 }
+window.setMe=setMe;
 
-function clickItem(sid,si,ii){
-  const id=iid(sid,si,ii);const ck=checks[id];
-  pendingId=id;pendingMember=me;
+function clickItem(sid,si,ii) {
+  if(!db){showToast('⚠️ Firebase non connecté — entre l\'URL d\'abord !');return;}
+  const id=iid(sid,si,ii); const ck=checks[id];
+  pendingId=id; pendingMember=me;
   document.getElementById('modalTask').textContent=DATA.find(s=>s.id===sid).subs[si].items[ii];
   document.getElementById('modalTitle').textContent=ck?'✏️ Modifier / Décocher':'✅ Marquer comme fait';
   document.getElementById('btnUncheck').style.display=ck?'block':'none';
-  document.querySelectorAll('.modal-mbtn').forEach(b=>b.classList.toggle('sel',b.dataset.m===(me||'__')));
-  if(me) pendingMember=me;
+  document.querySelectorAll('.modal-mbtn').forEach(b=>b.classList.toggle('sel',b.dataset.m===(me||'')));
   document.getElementById('overlay').classList.add('show');
 }
+window.clickItem=clickItem;
 
 function selM(m){pendingMember=m;document.querySelectorAll('.modal-mbtn').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));}
+window.selM=selM;
 
-function doConfirm(){
+async function doConfirm() {
   if(!pendingMember){showToast('⚠️ Choisis qui a fait cette tâche !');return;}
   const now=new Date();
   const d=now.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  checks[pendingId]={m:pendingMember,d};
-  saveChecks();render();closeModal();
-  showToast(`✅ Fait par ${pendingMember==='Mael'?'Maël':pendingMember} !`);
+  try{
+    await set(ref(db,`yplaza/checks/${pendingId}`),{m:pendingMember,d});
+    closeModal(); showToast(`✅ ${DISPLAY[pendingMember]} a coché cette tâche !`);
+  }catch(e){showToast('❌ Erreur Firebase : '+e.message);}
 }
+window.doConfirm=doConfirm;
 
-function doUncheck(){
-  delete checks[pendingId];saveChecks();render();closeModal();showToast('↺ Tâche décochée');
+async function doUncheck() {
+  try{
+    await remove(ref(db,`yplaza/checks/${pendingId}`));
+    closeModal(); showToast('↺ Tâche décochée');
+  }catch(e){showToast('❌ '+e.message);}
 }
+window.doUncheck=doUncheck;
 
 function closeModal(e){
   if(e&&e.target!==document.getElementById('overlay'))return;
   document.getElementById('overlay').classList.remove('show');
-  pendingId=null;pendingMember=null;
+  pendingId=null;
 }
+window.closeModal=closeModal;
 
 function toggleSec(id){document.querySelector(`.section[data-id="${id}"]`).classList.toggle('collapsed');}
+window.toggleSec=toggleSec;
 function expandAll(){document.querySelectorAll('.section').forEach(s=>s.classList.remove('collapsed'));}
+window.expandAll=expandAll;
 function collapseAll(){document.querySelectorAll('.section').forEach(s=>s.classList.add('collapsed'));}
+window.collapseAll=collapseAll;
 
 function exportMd(){
   let txt='# Y-Plaza — Checklist Projet B2\n';
-  const scores={};MEMBERS.forEach(m=>scores[m]=0);
+  const sc={}; MEMBERS.forEach(m=>sc[m]=0);
   DATA.forEach(sec=>{
     txt+=`\n## ${sec.icon} ${sec.title}\n`;
     sec.subs.forEach((sub,si)=>{
       txt+=`\n### ${sub.title}\n`;
       sub.items.forEach((item,ii)=>{
         const ck=checks[iid(sec.id,si,ii)];
-        if(ck)scores[ck.m]=(scores[ck.m]||0)+1;
-        txt+=ck?`✅ ${item} _(par ${ck.m} — ${ck.d})_\n`:`⬜ ${item}\n`;
+        if(ck)sc[ck.m]=(sc[ck.m]||0)+1;
+        txt+=ck?`✅ ${item} _(par ${DISPLAY[ck.m]} — ${ck.d})_\n`:`⬜ ${item}\n`;
       });
     });
   });
   txt+='\n---\n## 🏆 Classement\n';
-  Object.entries(scores).sort((a,b)=>b[1]-a[1]).forEach(([m,n],i)=>txt+=`${MEDALS[i]} ${m} : ${n} tâche${n>1?'s':''}\n`);
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='checklist-yplaza.md';a.click();
+  Object.entries(sc).sort((a,b)=>b[1]-a[1]).forEach(([m,n],i)=>txt+=`${MEDALS[i]} ${DISPLAY[m]} : ${n} tâche${n!==1?'s':''}\n`);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
+  a.download='checklist-yplaza.md';a.click();
   showToast('⬇ Export téléchargé !');
+}
+window.exportMd=exportMd;
+
+/* ══════════ UTILS ══════════ */
+function setSync(state,label){
+  document.getElementById('syncDot').className='sync-dot'+(state==='connected'?' connected':state==='error'?' error':'');
+  document.getElementById('syncLabel').textContent=label;
 }
 
 let toastT;
@@ -412,6 +506,7 @@ function showToast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3500);
 }
+window.showToast=showToast;
 
 function confetti(){
   const cols=['#00e5ff','#8b5cf6','#10b981','#f59e0b','#ef4444','#fff'];
@@ -422,7 +517,18 @@ function confetti(){
   },i*20);
 }
 
-(async()=>{await loadChecks();render();})();
+/* ══════════ INIT ══════════ */
+const savedMe = localStorage.getItem('yplaza-me');
+if(savedMe) setMe(savedMe);
+
+const savedUrl = localStorage.getItem('yplaza-dbUrl');
+if(savedUrl) {
+  document.getElementById('setupBanner').style.display='none';
+  startFirebase(savedUrl);
+} else {
+  setSync('','Configure Firebase ↑');
+  checks={}; render();
+}
 </script>
 </body>
 </html>
