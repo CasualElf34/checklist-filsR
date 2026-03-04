@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Y-Plaza — Checklist Équipe</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
   --bg:#080810;--surface:#0f0f1a;--surface2:#161625;--surface3:#1e1e30;
@@ -22,11 +23,9 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   pointer-events:none;z-index:0}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;position:relative;z-index:1}
 
-/* ── SETUP BANNER ── */
-#setupBanner{
-  background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.07));
-  border:1px solid rgba(245,158,11,.4);border-radius:8px;padding:24px 28px;margin-bottom:28px;
-}
+/* SETUP */
+#setupBanner{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.07));
+  border:1px solid rgba(245,158,11,.4);border-radius:8px;padding:24px 28px;margin-bottom:28px}
 #setupBanner h2{font-family:var(--font-h);font-size:16px;font-weight:800;color:var(--amber);margin-bottom:12px}
 #setupBanner ol{font-size:12px;color:var(--text);line-height:2.2;margin-left:18px;margin-bottom:18px}
 #setupBanner code{background:var(--surface3);color:var(--cyan);padding:2px 7px;border-radius:3px;font-size:11px;font-family:var(--font-m)}
@@ -38,12 +37,11 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .setup-field input:focus{border-color:var(--amber)}
 .setup-field input::placeholder{color:var(--muted)}
 .btn-setup{font-family:var(--font-m);font-size:11px;font-weight:700;letter-spacing:1px;
-  padding:11px 22px;background:var(--amber);color:#000;border:none;border-radius:4px;
-  cursor:pointer;transition:all .2s;text-transform:uppercase;white-space:nowrap}
+  padding:11px 22px;background:var(--amber);color:#000;border:none;border-radius:4px;cursor:pointer;transition:all .2s;text-transform:uppercase;white-space:nowrap}
 .btn-setup:hover{background:#fbbf24;box-shadow:0 0 16px rgba(245,158,11,.4)}
 .setup-hint{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.8}
 
-/* ── SYNC STATUS ── */
+/* SYNC */
 #syncStatus{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;
   color:var(--muted);margin-bottom:20px;padding:8px 14px;background:var(--surface);
   border:1px solid var(--border);border-radius:4px;width:fit-content}
@@ -58,7 +56,7 @@ header{padding:44px 0 32px;text-align:center;border-bottom:1px solid var(--borde
   color:var(--cyan);border:1px solid rgba(0,229,255,.3);padding:5px 14px;border-radius:2px;margin-bottom:16px}
 .badge::before{content:'●';animation:blink 2s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-h1{font-family:var(--font-h);font-size:clamp(2.6rem,6vw,4.5rem);font-weight:800;letter-spacing:-3px;color:#fff;line-height:.95;margin-bottom:10px}
+h1{font-family:var(--font-h);font-size:clamp(2.4rem,6vw,4.5rem);font-weight:800;letter-spacing:-3px;color:#fff;line-height:.95;margin-bottom:10px}
 h1 em{color:var(--cyan);font-style:normal}
 .tagline{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase}
 
@@ -66,8 +64,7 @@ h1 em{color:var(--cyan);font-style:normal}
 .who-bar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border2);
   border-radius:6px;padding:14px 20px;margin-bottom:20px;flex-wrap:wrap}
 .who-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.member-btn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:7px 16px;border-radius:4px;
-  cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
+.member-btn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:7px 16px;border-radius:4px;cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
 .member-btn[data-m="Lucas"]{color:#00e5ff;border-color:rgba(0,229,255,.3)}
 .member-btn[data-m="Mael"]{color:#8b5cf6;border-color:rgba(139,92,246,.3)}
 .member-btn[data-m="Maxime"]{color:#10b981;border-color:rgba(16,185,129,.3)}
@@ -86,8 +83,7 @@ h1 em{color:var(--cyan);font-style:normal}
 .lb-row{display:flex;align-items:center;gap:12px}
 .lb-rank{font-size:12px;color:var(--muted);width:20px;text-align:center;flex-shrink:0}
 .lb-rank.top{color:var(--amber)}
-.lb-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;font-family:var(--font-h);flex-shrink:0;border:2px solid}
+.lb-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--font-h);flex-shrink:0;border:2px solid}
 .lb-name{font-size:12px;color:var(--text);flex-shrink:0;width:70px}
 .lb-bar-wrap{flex:1;background:var(--surface3);height:6px;border-radius:3px;overflow:hidden}
 .lb-bar{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
@@ -97,7 +93,7 @@ h1 em{color:var(--cyan);font-style:normal}
 .global-progress{background:var(--surface);border:1px solid var(--border2);border-radius:6px;
   padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .gp-label{font-family:var(--font-h);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.gp-bar-wrap{flex:1;min-width:120px;background:var(--surface3);height:8px;border-radius:4px;overflow:hidden}
+.gp-bar-wrap{flex:1;min-width:100px;background:var(--surface3);height:8px;border-radius:4px;overflow:hidden}
 .gp-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:4px;transition:width .5s;width:0}
 .gp-pct{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--cyan);white-space:nowrap}
 
@@ -107,7 +103,49 @@ h1 em{color:var(--cyan);font-style:normal}
   padding:8px 14px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);
   cursor:pointer;border-radius:3px;transition:all .2s}
 .btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.05)}
-.btn-danger:hover{border-color:var(--red)!important;color:var(--red)!important}
+.btn.active-btn{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.08)}
+
+/* ═══ CHART PANEL ═══ */
+#chartPanel{
+  background:var(--surface);border:1px solid var(--border2);border-radius:6px;
+  padding:24px;margin-bottom:20px;display:none;
+}
+#chartPanel.open{display:block}
+.chart-title{font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.chart-title span{color:#fff}
+.chart-wrap{position:relative;height:280px}
+
+/* ═══ PRIORITY PANEL ═══ */
+#prioPanel{
+  background:var(--surface);border:1px solid var(--border2);border-radius:6px;
+  padding:24px;margin-bottom:20px;display:none;
+}
+#prioPanel.open{display:block}
+.prio-title{font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.prio-title span{color:#fff}
+.prio-subtitle{font-size:10px;color:var(--muted);margin-bottom:20px;letter-spacing:1px}
+.prio-list{display:flex;flex-direction:column;gap:6px}
+.prio-item{
+  display:flex;align-items:center;gap:12px;padding:10px 14px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:4px;
+  transition:all .2s;cursor:default;
+}
+.prio-item:hover{border-color:var(--border2);background:var(--surface3)}
+.prio-item.done-item{opacity:.35}
+.prio-num{
+  font-family:var(--font-h);font-size:11px;font-weight:800;
+  width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:10px;
+}
+.prio-badge{
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;font-weight:700;flex-shrink:0;
+}
+.prio-text{font-size:11px;color:var(--text);flex:1;line-height:1.4}
+.prio-item.done-item .prio-text{text-decoration:line-through;color:var(--muted)}
+.prio-section{font-size:9px;color:var(--muted);flex-shrink:0;max-width:120px;text-align:right;line-height:1.4}
 
 /* SECTIONS */
 .section{margin-bottom:14px;border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .3s}
@@ -127,12 +165,10 @@ h1 em{color:var(--cyan);font-style:normal}
 .section.collapsed .chevron{transform:rotate(-90deg)}
 .sec-body{overflow:hidden;max-height:5000px;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
 .section.collapsed .sec-body{max-height:0}
-
-/* SUBSECTION */
 .subsec{padding:10px 18px 6px;border-top:1px solid var(--border)}
 .subsec-title{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-bottom:8px;padding-bottom:5px;border-bottom:1px dashed var(--border)}
 
-/* ITEM */
+/* ITEMS */
 .item{display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.025);cursor:pointer;transition:all .15s;border-radius:3px}
 .item:last-child{border-bottom:none}
 .item:hover{background:rgba(255,255,255,.025);padding-left:10px}
@@ -179,11 +215,9 @@ h1 em{color:var(--cyan);font-style:normal}
 .toast{position:fixed;bottom:28px;right:28px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--font-h);font-size:13px;font-weight:600;padding:12px 20px;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);z-index:200;pointer-events:none;max-width:300px}
 .toast.show{transform:none;opacity:1}
 
-/* LOADING */
 .loading{text-align:center;padding:50px 20px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase}
 .spinner{width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 @keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .cf{position:fixed;width:7px;height:7px;border-radius:1px;pointer-events:none;z-index:9999;animation:cf 2s ease forwards}
 </style>
@@ -191,28 +225,23 @@ h1 em{color:var(--cyan);font-style:normal}
 <body>
 <div class="wrap">
 
-  <!-- ══ SETUP BANNER ══ -->
+  <!-- SETUP -->
   <div id="setupBanner">
     <h2>⚙️ Dernière étape — Active la Realtime Database Firebase</h2>
     <ol>
-      <li>Va sur <code>console.firebase.google.com</code> → ton projet <code>yplaza-b2</code></li>
-      <li>Dans le menu gauche : <strong>Build › Realtime Database</strong></li>
-      <li>Clique <strong>"Créer une base de données"</strong> → choisir la région <strong>europe-west1</strong> → <strong>Mode test</strong></li>
-      <li>Tu verras une URL du type : <code>https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app</code></li>
-      <li>Colle cette URL ci-dessous :</li>
+      <li>Va sur <code>console.firebase.google.com</code> → projet <code>yplaza-b2</code></li>
+      <li>Menu gauche : <strong>Realtime Database</strong> → <strong>"Créer une base de données"</strong></li>
+      <li>Région <strong>europe-west1</strong> → <strong>Mode test</strong> → Activer</li>
+      <li>Copie l'URL affichée en haut (ex: <code>https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app</code>)</li>
     </ol>
     <div class="db-url-row">
       <div class="setup-field">
         <label>Database URL</label>
-        <input id="cfg-dbUrl" placeholder="https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app" />
+        <input id="cfg-dbUrl" placeholder="https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app"/>
       </div>
       <button class="btn-setup" onclick="connectFirebase()">🔥 Connecter</button>
     </div>
-    <p class="setup-hint">
-      ✅ Toute la config Firebase est déjà intégrée — il manque juste cette URL.<br>
-      💾 Sera sauvegardée dans le navigateur, chaque membre entre l'URL une seule fois.<br>
-      🔒 Mode test = accès ouvert 30 jours. Pense à sécuriser les règles Firebase avant la soutenance.
-    </p>
+    <p class="setup-hint">✅ Toute la config est déjà intégrée — il manque juste cette URL.<br>💾 Sauvegardée dans le navigateur, chaque membre entre l'URL une seule fois.</p>
   </div>
 
   <header>
@@ -241,16 +270,34 @@ h1 em{color:var(--cyan);font-style:normal}
   </div>
 
   <div class="global-progress">
-    <span class="gp-label">Progression</span>
+    <span class="gp-label">Progression globale</span>
     <div class="gp-bar-wrap"><div class="gp-bar" id="gpBar"></div></div>
     <span class="gp-pct" id="gpPct">— / —</span>
   </div>
 
+  <!-- CONTROLS -->
   <div class="controls">
     <button class="btn" onclick="expandAll()">▼ Tout déplier</button>
     <button class="btn" onclick="collapseAll()">▲ Tout replier</button>
-    <button class="btn" onclick="exportMd()">⬇ Exporter .md</button>
-    <button class="btn btn-danger" onclick="resetConfig()" style="margin-left:auto;color:rgba(239,68,68,.6);border-color:rgba(239,68,68,.2)">⚙️ Reconfigurer</button>
+    <button class="btn" id="btnChart" onclick="toggleChart()">📈 Graphique</button>
+    <button class="btn" id="btnPrio"  onclick="togglePrio()">🎯 Priorités</button>
+    <button class="btn" onclick="exportMd()">⬇ Exporter</button>
+    <button class="btn" onclick="resetConfig()" style="margin-left:auto;color:rgba(239,68,68,.5);border-color:rgba(239,68,68,.2)">⚙️ Config</button>
+  </div>
+
+  <!-- CHART PANEL -->
+  <div id="chartPanel">
+    <div class="chart-title">📈 <span>Progression par membre — tâches complétées</span></div>
+    <div class="chart-wrap">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <!-- PRIORITY PANEL -->
+  <div id="prioPanel">
+    <div class="prio-title">🎯 <span>Ordre de priorité des tâches</span></div>
+    <p class="prio-subtitle">Les tâches fondamentales à faire en premier pour débloquer la suite · Les tâches déjà faites sont grisées</p>
+    <div class="prio-list" id="prioList"></div>
   </div>
 
   <div id="checklist"><div class="loading"><div class="spinner"></div>En attente de Firebase…</div></div>
@@ -275,27 +322,90 @@ h1 em{color:var(--cyan);font-style:normal}
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, set, remove, onValue }
-                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ══════════ CONFIG — déjà remplie avec tes clés ══════════ */
+/* ══════════ FIREBASE CONFIG ══════════ */
 const BASE_CONFIG = {
   apiKey:            "AIzaSyA5oBWHiNc8RKthanGn8aP_Ov-hIALDPmo",
   authDomain:        "yplaza-b2.firebaseapp.com",
   projectId:         "yplaza-b2",
   storageBucket:     "yplaza-b2.firebasestorage.app",
   messagingSenderId: "927837405691",
-  appId:             "1:927837405691:web:137be5c192cfcc69320b5e",
-  measurementId:     "G-S263CV9BRZ"
+  appId:             "1:927837405691:web:137be5c192cfcc69320b5e"
 };
 
 /* ══════════ CHECKLIST DATA ══════════ */
 const DATA=[{id:"conception",icon:"🎯",title:"Conception du projet",tag:"dev",subs:[{title:"Définir le besoin",items:["Identifier les utilisateurs (Client, Commercial, Admin)","Définir les fonctionnalités principales","Rédiger une mini documentation fonctionnelle"]},{title:"Architecture",items:["Backend orienté services (API REST)","Séparation Frontend / Backend","Structure claire du projet","Respect des principes SOLID / DRY / KISS"]}]},{id:"bdd",icon:"🗄️",title:"Base de données",tag:"dev",subs:[{title:"Modélisation",items:["Table Utilisateurs","Table Agences","Table Biens immobiliers","Table Transactions","Table Demandes clients","Table Statistiques (bonus)"]},{title:"SQL avancé",items:["CRUD complet (Create, Read, Update, Delete)","Requêtes avec jointures","Index sur colonnes importantes","Requêtes statistiques (top ventes, zones populaires)"]}]},{id:"backend",icon:"⚙️",title:"Backend (API REST)",tag:"dev",subs:[{title:"Authentification",items:["Inscription (POST /register)","Connexion (POST /login)","Gestion des rôles : Admin / Commercial / Client","Hash des mots de passe (bcrypt)"]},{title:"Endpoints Biens",items:["GET /biens — liste tous les biens","GET /biens/{id} — détail d'un bien","POST /biens — créer un bien","PUT /biens/{id} — modifier un bien","DELETE /biens/{id} — supprimer un bien"]},{title:"Bonnes pratiques",items:["Validation des données entrantes","Gestion des erreurs propre (codes HTTP corrects)","Logs applicatifs","Architecture en couches : Controller / Service / Repository"]}]},{id:"frontend",icon:"🎨",title:"Frontend",tag:"dev",subs:[{title:"Interface utilisateur",items:["Page d'accueil","Page recherche de biens","Filtres dynamiques (prix, ville, surface)","Page détail d'un bien","Dashboard agence"]},{title:"Responsive Design",items:["Compatible Desktop","Compatible Tablette","Compatible Smartphone"]},{title:"Performance",items:["Optimisation des images","Lazy loading","Appels API optimisés"]}]},{id:"data",icon:"📊",title:"Data & Analyse Python",tag:"data",subs:[{title:"Rapports de ventes",items:["Total ventes par mois","Biens les plus vendus","Prix moyen par ville","Nombre de ventes par agence"]},{title:"Analyses statistiques",items:["Identifier les zones attractives","Prévoir tendance des prix (moyenne, évolution)","Graphiques dynamiques (Chart.js ou autre)"]},{title:"Nettoyage des données",items:["Supprimer les doublons","Gérer les données manquantes","Normaliser les formats"]}]},{id:"secu",icon:"🔐",title:"Sécurité applicative",tag:"cyber",subs:[{title:"Protections essentielles",items:["Requêtes préparées (anti SQL injection)","Protection XSS (échappement des sorties)","HTTPS obligatoire","Limiter les tentatives de connexion (rate limiting)","Validation côté serveur obligatoire","CORS configuré correctement"]}]},{id:"infra",icon:"🏗️",title:"Infrastructure Réseau",tag:"infra",subs:[{title:"Windows Server & Active Directory",items:["Installer et configurer Windows Server","Mettre en place un Active Directory (AD DS)","Définir des stratégies de groupe (GPO)","Gestion des droits d'accès basée sur les rôles"]},{title:"Architecture réseau",items:["Schéma d'architecture réseau complet","Plan d'adressage IP (siège + 12 agences)","VPN/IPSec site-à-site — siège ↔ agences","Services DNS, DHCP, NAT configurés","VLAN par département"]},{title:"Sécurité réseau",items:["Mise en œuvre du pare-feu","Filtrage des flux réseau","Politique de sécurité documentée","Plan de sauvegarde et de supervision"]},{title:"Maquette & Cloud",items:["1 VM serveur configurée (HyperV / VMware / VirtualBox)","1-2 VM représentant agence et/ou siège","1 routeur configuré","Proposition solution Cloud (Azure / AWS)"]},{title:"Documentation INFRA",items:["Schéma d'architecture réseau","Plan d'adressage IP","Politique de sécurité","Guide de configuration des serveurs","Plan de sauvegarde et supervision","Guide de déploiement","Liste matériel et budgétisation"]}]},{id:"collab",icon:"🤝",title:"Versioning & Collaboration",tag:"collab",subs:[{title:"Git & GitHub",items:["Repository Git propre et bien structuré","Branches organisées (main / dev / feature/*)","Commits clairs et descriptifs","README complet (installation, usage, architecture)"]},{title:"Gestion de projet",items:["Trello / Notion — tableau de suivi","Planification des tâches et sprints","Suivi de l'avancement régulier"]}]},{id:"doc",icon:"📄",title:"Documentation DEV",tag:"dev",subs:[{title:"Livrables documentaires",items:["Diagramme UML (classes, séquence)","Schéma de base de données (MCD / MLD)","Description des endpoints API","Choix techniques justifiés","Documentation fonctionnelle (user stories)","Guide de déploiement"]}]}];
+
+/* ══════════ PRIORITÉS ══════════
+   Ordre logique : d'abord les fondations, puis construction, puis finition
+   Format: { sid, si, ii, reason }  — sid=section id, si=sub index, ii=item index
+*/
+const PRIORITIES = [
+  // 🔴 CRITIQUE — fondations à poser avant tout
+  {sid:"conception",si:0,ii:0, prio:1, label:"🔴 Critique"},
+  {sid:"conception",si:0,ii:1, prio:1, label:"🔴 Critique"},
+  {sid:"conception",si:1,ii:0, prio:1, label:"🔴 Critique"},
+  {sid:"collab",    si:0,ii:0, prio:1, label:"🔴 Critique"},
+  {sid:"collab",    si:0,ii:1, prio:1, label:"🔴 Critique"},
+  {sid:"collab",    si:1,ii:0, prio:1, label:"🔴 Critique"},
+  // 🟠 HAUTE — BDD & Auth, tout le reste dépend de ça
+  {sid:"bdd",       si:0,ii:0, prio:2, label:"🟠 Haute"},
+  {sid:"bdd",       si:0,ii:1, prio:2, label:"🟠 Haute"},
+  {sid:"bdd",       si:0,ii:2, prio:2, label:"🟠 Haute"},
+  {sid:"bdd",       si:0,ii:3, prio:2, label:"🟠 Haute"},
+  {sid:"backend",   si:0,ii:0, prio:2, label:"🟠 Haute"},
+  {sid:"backend",   si:0,ii:1, prio:2, label:"🟠 Haute"},
+  {sid:"backend",   si:0,ii:2, prio:2, label:"🟠 Haute"},
+  {sid:"backend",   si:0,ii:3, prio:2, label:"🟠 Haute"},
+  {sid:"infra",     si:0,ii:0, prio:2, label:"🟠 Haute"},
+  {sid:"infra",     si:0,ii:1, prio:2, label:"🟠 Haute"},
+  {sid:"infra",     si:1,ii:0, prio:2, label:"🟠 Haute"},
+  {sid:"infra",     si:1,ii:1, prio:2, label:"🟠 Haute"},
+  {sid:"infra",     si:1,ii:2, prio:2, label:"🟠 Haute"},
+  // 🟡 NORMALE — core features
+  {sid:"backend",   si:1,ii:0, prio:3, label:"🟡 Normale"},
+  {sid:"backend",   si:1,ii:1, prio:3, label:"🟡 Normale"},
+  {sid:"backend",   si:1,ii:2, prio:3, label:"🟡 Normale"},
+  {sid:"backend",   si:1,ii:3, prio:3, label:"🟡 Normale"},
+  {sid:"backend",   si:1,ii:4, prio:3, label:"🟡 Normale"},
+  {sid:"bdd",       si:1,ii:0, prio:3, label:"🟡 Normale"},
+  {sid:"bdd",       si:1,ii:1, prio:3, label:"🟡 Normale"},
+  {sid:"bdd",       si:1,ii:2, prio:3, label:"🟡 Normale"},
+  {sid:"frontend",  si:0,ii:0, prio:3, label:"🟡 Normale"},
+  {sid:"frontend",  si:0,ii:1, prio:3, label:"🟡 Normale"},
+  {sid:"frontend",  si:0,ii:2, prio:3, label:"🟡 Normale"},
+  {sid:"secu",      si:0,ii:0, prio:3, label:"🟡 Normale"},
+  {sid:"secu",      si:0,ii:1, prio:3, label:"🟡 Normale"},
+  {sid:"secu",      si:0,ii:4, prio:3, label:"🟡 Normale"},
+  {sid:"infra",     si:1,ii:3, prio:3, label:"🟡 Normale"},
+  {sid:"infra",     si:2,ii:0, prio:3, label:"🟡 Normale"},
+  {sid:"infra",     si:2,ii:1, prio:3, label:"🟡 Normale"},
+  // 🔵 BASSE — finitions & docs
+  {sid:"frontend",  si:0,ii:3, prio:4, label:"🔵 Basse"},
+  {sid:"frontend",  si:0,ii:4, prio:4, label:"🔵 Basse"},
+  {sid:"frontend",  si:1,ii:0, prio:4, label:"🔵 Basse"},
+  {sid:"frontend",  si:1,ii:1, prio:4, label:"🔵 Basse"},
+  {sid:"frontend",  si:1,ii:2, prio:4, label:"🔵 Basse"},
+  {sid:"data",      si:0,ii:0, prio:4, label:"🔵 Basse"},
+  {sid:"data",      si:0,ii:1, prio:4, label:"🔵 Basse"},
+  {sid:"data",      si:1,ii:0, prio:4, label:"🔵 Basse"},
+  {sid:"doc",       si:0,ii:0, prio:4, label:"🔵 Basse"},
+  {sid:"doc",       si:0,ii:1, prio:4, label:"🔵 Basse"},
+  {sid:"doc",       si:0,ii:2, prio:4, label:"🔵 Basse"},
+  {sid:"infra",     si:4,ii:0, prio:4, label:"🔵 Basse"},
+  {sid:"infra",     si:4,ii:1, prio:4, label:"🔵 Basse"},
+  {sid:"infra",     si:4,ii:2, prio:4, label:"🔵 Basse"},
+];
+
+const PRIO_COLORS = {1:"#ef4444",2:"#f59e0b",3:"#00e5ff",4:"#8b5cf6"};
+const PRIO_BG     = {1:"rgba(239,68,68,.08)",2:"rgba(245,158,11,.08)",3:"rgba(0,229,255,.06)",4:"rgba(139,92,246,.06)"};
+const PRIO_BORDER = {1:"rgba(239,68,68,.25)",2:"rgba(245,158,11,.25)",3:"rgba(0,229,255,.2)",4:"rgba(139,92,246,.2)"};
 
 const MEMBERS=["Lucas","Mael","Maxime","Anthony"];
 const COLORS={Lucas:"#00e5ff",Mael:"#8b5cf6",Maxime:"#10b981",Anthony:"#f59e0b"};
@@ -304,63 +414,58 @@ const MEDALS=["🥇","🥈","🥉","4️⃣"];
 const DISPLAY={Lucas:"Lucas",Mael:"Maël",Maxime:"Maxime",Anthony:"Anthony"};
 
 let checks={}, me=null, pendingId=null, pendingMember=null, db=null;
+let chartInstance=null, chartOpen=false, prioOpen=false;
 const iid=(s,si,ii)=>`${s}__${si}__${ii}`;
 
-/* ══════════ FIREBASE CONNECT ══════════ */
-function connectFirebase() {
-  const url = document.getElementById('cfg-dbUrl').value.trim();
-  if (!url || !url.startsWith('https://')) {
-    showToast('https://yplaza-b2-default-rtdb.europe-west1.firebasedatabase.app/'); return;
-  }
-  localStorage.setItem('yplaza-dbUrl', url);
+/* ══════════ FIREBASE ══════════ */
+function connectFirebase(){
+  const url=document.getElementById('cfg-dbUrl').value.trim();
+  if(!url||!url.startsWith('https://')){showToast('⚠️ Colle l\'URL Realtime Database !');return;}
+  localStorage.setItem('yplaza-dbUrl',url);
   startFirebase(url);
 }
-window.connectFirebase = connectFirebase;
+window.connectFirebase=connectFirebase;
 
-function startFirebase(databaseURL) {
-  try {
-    const app = initializeApp({ ...BASE_CONFIG, databaseURL });
-    db = getDatabase(app);
-    setSync('connecting', 'Connexion à Firebase…');
-
-    onValue(ref(db, 'yplaza/checks'), (snap) => {
-      checks = snap.val() || {};
-      document.getElementById('setupBanner').style.display = 'none';
-      setSync('connected', 'Firebase connecté — sync temps réel 🟢');
+function startFirebase(databaseURL){
+  try{
+    const app=initializeApp({...BASE_CONFIG,databaseURL});
+    db=getDatabase(app);
+    setSync('connecting','Connexion…');
+    onValue(ref(db,'yplaza/checks'),(snap)=>{
+      checks=snap.val()||{};
+      document.getElementById('setupBanner').style.display='none';
+      setSync('connected','Firebase connecté — sync temps réel 🟢');
       render();
-    }, (err) => {
-      setSync('error', 'Erreur : ' + err.message);
-      showToast('❌ ' + err.message);
+    },(err)=>{
+      setSync('error','Erreur : '+err.message);
+      showToast('❌ '+err.message);
     });
-  } catch(e) {
-    setSync('error', 'Erreur de config');
-    showToast('❌ ' + e.message);
-  }
+  }catch(e){setSync('error','Config invalide');showToast('❌ '+e.message);}
 }
 
-function resetConfig() {
-  localStorage.removeItem('yplaza-dbUrl');
-  document.getElementById('setupBanner').style.display = 'block';
-  showToast('⚙️ URL réinitialisée');
-}
-window.resetConfig = resetConfig;
+function resetConfig(){localStorage.removeItem('yplaza-dbUrl');document.getElementById('setupBanner').style.display='block';showToast('⚙️ Config réinitialisée');}
+window.resetConfig=resetConfig;
 
 /* ══════════ RENDER ══════════ */
-function render() {
-  renderChecklist(); renderLeaderboard(); renderGlobal();
+function render(){
+  renderChecklist();
+  renderLeaderboard();
+  renderGlobal();
+  if(chartOpen) renderChart();
+  if(prioOpen)  renderPrio();
 }
 
-function renderChecklist() {
-  const collapsed = new Set([...document.querySelectorAll('.section.collapsed')].map(s=>s.dataset.id));
-  const c = document.getElementById('checklist');
-  c.innerHTML = '';
-  DATA.forEach(sec => {
-    const total = sec.subs.reduce((a,s)=>a+s.items.length,0);
-    const done  = sec.subs.reduce((a,s,si)=>a+s.items.filter((_,ii)=>checks[iid(sec.id,si,ii)]).length,0);
-    const el = document.createElement('div');
-    el.className = 'section' + (collapsed.has(sec.id) ? ' collapsed' : '');
-    el.dataset.id = sec.id;
-    el.innerHTML = `
+function renderChecklist(){
+  const collapsed=new Set([...document.querySelectorAll('.section.collapsed')].map(s=>s.dataset.id));
+  const c=document.getElementById('checklist');
+  c.innerHTML='';
+  DATA.forEach(sec=>{
+    const total=sec.subs.reduce((a,s)=>a+s.items.length,0);
+    const done=sec.subs.reduce((a,s,si)=>a+s.items.filter((_,ii)=>checks[iid(sec.id,si,ii)]).length,0);
+    const el=document.createElement('div');
+    el.className='section'+(collapsed.has(sec.id)?' collapsed':'');
+    el.dataset.id=sec.id;
+    el.innerHTML=`
       <div class="sec-head" onclick="toggleSec('${sec.id}')">
         <span class="sec-icon">${sec.icon}</span>
         <span class="sec-title">${sec.title}</span>
@@ -373,7 +478,7 @@ function renderChecklist() {
           <div class="subsec">
             <div class="subsec-title">${sub.title}</div>
             ${sub.items.map((item,ii)=>{
-              const id=iid(sec.id,si,ii); const ck=checks[id];
+              const id=iid(sec.id,si,ii);const ck=checks[id];
               return `<div class="item${ck?' done':''}" onclick="clickItem('${sec.id}',${si},${ii})">
                 <div class="chkbox">${ck?'✓':''}</div>
                 <div class="item-right">
@@ -391,12 +496,12 @@ function renderChecklist() {
   });
 }
 
-function renderLeaderboard() {
-  const scores={}; MEMBERS.forEach(m=>scores[m]=0);
+function renderLeaderboard(){
+  const scores={};MEMBERS.forEach(m=>scores[m]=0);
   Object.values(checks).forEach(v=>{if(v&&v.m&&scores[v.m]!==undefined)scores[v.m]++;});
   const sorted=[...MEMBERS].sort((a,b)=>scores[b]-scores[a]);
   const max=Math.max(...Object.values(scores),1);
-  document.getElementById('lbRows').innerHTML = sorted.map((m,i)=>`
+  document.getElementById('lbRows').innerHTML=sorted.map((m,i)=>`
     <div class="lb-row">
       <span class="lb-rank${i===0?' top':''}">${MEDALS[i]}</span>
       <div class="lb-avatar" style="background:${COLORS[m]}22;border-color:${COLORS[m]}55;color:${COLORS[m]}">${INIT[m]}</div>
@@ -406,28 +511,164 @@ function renderLeaderboard() {
     </div>`).join('');
 }
 
-function renderGlobal() {
+function renderGlobal(){
   const total=DATA.reduce((a,s)=>a+s.subs.reduce((b,ss)=>b+ss.items.length,0),0);
   const done=Object.values(checks).filter(Boolean).length;
   const pct=Math.round(done/total*100);
   document.getElementById('gpBar').style.width=pct+'%';
   document.getElementById('gpPct').textContent=`${done} / ${total} — ${pct}%`;
-  if(done===total&&done>0){showToast('🎉 Projet 100% terminé ! GG l\'équipe !');confetti();}
+  if(done===total&&done>0){showToast('🎉 Projet 100% terminé !');confetti();}
+}
+
+/* ══════════ CHART ══════════ */
+function toggleChart(){
+  chartOpen=!chartOpen;
+  document.getElementById('chartPanel').classList.toggle('open',chartOpen);
+  document.getElementById('btnChart').classList.toggle('active-btn',chartOpen);
+  if(chartOpen) renderChart();
+}
+window.toggleChart=toggleChart;
+
+function renderChart(){
+  const total=DATA.reduce((a,s)=>a+s.subs.reduce((b,ss)=>b+ss.items.length,0),0);
+  // Compte les tâches par membre
+  const scores={};MEMBERS.forEach(m=>scores[m]=0);
+  Object.values(checks).forEach(v=>{if(v&&v.m&&scores[v.m]!==undefined)scores[v.m]++;});
+
+  // Reconstitue l'historique chronologique par membre
+  // On trie les checks par date pour simuler une courbe de progression
+  const history=[];
+  Object.entries(checks).forEach(([id,v])=>{
+    if(v&&v.m&&v.d) history.push({m:v.m, dateStr:v.d});
+  });
+  // Trie par ordre d'apparition (on ne peut pas re-parser la date fr facilement, on utilise l'index d'ajout)
+  // On construit des labels = numéro de tâche cochée dans le temps
+  // Pour chaque membre, on compte combien de tâches il a cochées à chaque "step"
+  const memberHistory={};
+  MEMBERS.forEach(m=>memberHistory[m]=[]);
+  history.forEach(h=>memberHistory[h.m].push(1));
+
+  // Labels = nombre max de tâches cochées toutes équipes
+  const maxSteps=Math.max(...MEMBERS.map(m=>memberHistory[m].length),1);
+  const labels=Array.from({length:maxSteps+1},(_,i)=>i===0?'Début':`Tâche ${i}`);
+
+  const datasets=MEMBERS.map(m=>({
+    label: DISPLAY[m],
+    data: Array.from({length:maxSteps+1},(_,i)=>i===0?0:Math.min(i,memberHistory[m].length)),
+    borderColor: COLORS[m],
+    backgroundColor: COLORS[m]+'22',
+    borderWidth:2,
+    pointBackgroundColor: COLORS[m],
+    pointRadius:3,
+    pointHoverRadius:6,
+    tension:.4,
+    fill:false,
+  }));
+
+  const ctx=document.getElementById('myChart').getContext('2d');
+  if(chartInstance) chartInstance.destroy();
+  chartInstance=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:{duration:600,easing:'easeInOutQuart'},
+      plugins:{
+        legend:{
+          labels:{color:'#dde1f0',font:{family:"'Space Mono',monospace",size:11},padding:20,usePointStyle:true}
+        },
+        tooltip:{
+          backgroundColor:'#161625',borderColor:'#2e2e48',borderWidth:1,
+          titleColor:'#fff',bodyColor:'#dde1f0',
+          titleFont:{family:"'Syne',sans-serif",weight:'bold'},
+          callbacks:{
+            label:ctx=>`${ctx.dataset.label} : ${ctx.raw} tâche${ctx.raw!==1?'s':''}`
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{color:'#5a5a80',font:{family:"'Space Mono',monospace",size:10},maxTicksLimit:10},
+          grid:{color:'rgba(255,255,255,.04)'},
+          border:{color:'#252538'}
+        },
+        y:{
+          min:0,
+          max:total,
+          ticks:{color:'#5a5a80',font:{family:"'Space Mono',monospace",size:10},stepSize:Math.ceil(total/8)},
+          grid:{color:'rgba(255,255,255,.04)'},
+          border:{color:'#252538'},
+          title:{display:true,text:'Tâches complétées',color:'#5a5a80',font:{family:"'Space Mono',monospace",size:10}}
+        }
+      }
+    }
+  });
+}
+
+/* ══════════ PRIORITÉS ══════════ */
+function togglePrio(){
+  prioOpen=!prioOpen;
+  document.getElementById('prioPanel').classList.toggle('open',prioOpen);
+  document.getElementById('btnPrio').classList.toggle('active-btn',prioOpen);
+  if(prioOpen) renderPrio();
+}
+window.togglePrio=togglePrio;
+
+function renderPrio(){
+  const list=document.getElementById('prioList');
+  list.innerHTML='';
+
+  // Cherche les tâches non faites parmi les priorités, dans l'ordre
+  const items=PRIORITIES.map((p,idx)=>{
+    const sec=DATA.find(s=>s.id===p.sid);
+    if(!sec||!sec.subs[p.si]||!sec.subs[p.si].items[p.ii]) return null;
+    const id=iid(p.sid,p.si,p.ii);
+    const done=!!checks[id];
+    const ck=checks[id];
+    return {
+      idx:idx+1, text:sec.subs[p.si].items[p.ii],
+      section:`${sec.icon} ${sec.title}`,
+      tag:sec.tag, prio:p.prio, label:p.label,
+      done, ck
+    };
+  }).filter(Boolean);
+
+  // Séparateurs par niveau
+  let lastPrio=0;
+  items.forEach(item=>{
+    if(item.prio!==lastPrio){
+      lastPrio=item.prio;
+      const sep=document.createElement('div');
+      sep.style.cssText=`font-size:10px;letter-spacing:2px;text-transform:uppercase;color:${PRIO_COLORS[item.prio]};padding:12px 0 6px;font-family:var(--font-h);font-weight:700`;
+      const counts={1:'À faire EN PREMIER — bloquant',2:'À faire ensuite — dépendances',3:'Core features',4:'Finitions & documentation'};
+      sep.textContent=`${item.label.split(' ')[0]} ${counts[item.prio]}`;
+      list.appendChild(sep);
+    }
+    const el=document.createElement('div');
+    el.className='prio-item'+(item.done?' done-item':'');
+    el.style.cssText=`background:${item.done?'var(--surface2)':PRIO_BG[item.prio]};border-color:${item.done?'var(--border)':PRIO_BORDER[item.prio]}`;
+    el.innerHTML=`
+      <div class="prio-num" style="background:${PRIO_COLORS[item.prio]}22;color:${PRIO_COLORS[item.prio]};border:1px solid ${PRIO_COLORS[item.prio]}44">${item.done?'✓':item.idx}</div>
+      <div class="prio-text">${item.text}${item.done&&item.ck?` <span style="font-size:9px;color:var(--muted)">— ${DISPLAY[item.ck.m]||item.ck.m}</span>`:''}</div>
+      <div class="prio-section"><span class="sec-tag tag-${item.tag}" style="display:inline-block">${item.tag.toUpperCase()}</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">${item.section}</span></div>`;
+    list.appendChild(el);
+  });
 }
 
 /* ══════════ INTERACTIONS ══════════ */
-function setMe(name) {
+function setMe(name){
   me=name;
   document.querySelectorAll('.member-btn').forEach(b=>b.classList.toggle('active',b.dataset.m===name));
   document.getElementById('whoName').innerHTML=`Connecté : <span>${DISPLAY[name]}</span>`;
-  localStorage.setItem('yplaza-me', name);
+  localStorage.setItem('yplaza-me',name);
 }
 window.setMe=setMe;
 
-function clickItem(sid,si,ii) {
-  if(!db){showToast('⚠️ Firebase non connecté — entre l\'URL d\'abord !');return;}
-  const id=iid(sid,si,ii); const ck=checks[id];
-  pendingId=id; pendingMember=me;
+function clickItem(sid,si,ii){
+  if(!db){showToast('⚠️ Firebase non connecté !');return;}
+  const id=iid(sid,si,ii);const ck=checks[id];
+  pendingId=id;pendingMember=me;
   document.getElementById('modalTask').textContent=DATA.find(s=>s.id===sid).subs[si].items[ii];
   document.getElementById('modalTitle').textContent=ck?'✏️ Modifier / Décocher':'✅ Marquer comme fait';
   document.getElementById('btnUncheck').style.display=ck?'block':'none';
@@ -439,22 +680,20 @@ window.clickItem=clickItem;
 function selM(m){pendingMember=m;document.querySelectorAll('.modal-mbtn').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));}
 window.selM=selM;
 
-async function doConfirm() {
+async function doConfirm(){
   if(!pendingMember){showToast('⚠️ Choisis qui a fait cette tâche !');return;}
   const now=new Date();
   const d=now.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   try{
     await set(ref(db,`yplaza/checks/${pendingId}`),{m:pendingMember,d});
-    closeModal(); showToast(`✅ ${DISPLAY[pendingMember]} a coché cette tâche !`);
-  }catch(e){showToast('❌ Erreur Firebase : '+e.message);}
+    closeModal();showToast(`✅ ${DISPLAY[pendingMember]} a coché cette tâche !`);
+  }catch(e){showToast('❌ '+e.message);}
 }
 window.doConfirm=doConfirm;
 
-async function doUncheck() {
-  try{
-    await remove(ref(db,`yplaza/checks/${pendingId}`));
-    closeModal(); showToast('↺ Tâche décochée');
-  }catch(e){showToast('❌ '+e.message);}
+async function doUncheck(){
+  try{await remove(ref(db,`yplaza/checks/${pendingId}`));closeModal();showToast('↺ Tâche décochée');}
+  catch(e){showToast('❌ '+e.message);}
 }
 window.doUncheck=doUncheck;
 
@@ -474,7 +713,7 @@ window.collapseAll=collapseAll;
 
 function exportMd(){
   let txt='# Y-Plaza — Checklist Projet B2\n';
-  const sc={}; MEMBERS.forEach(m=>sc[m]=0);
+  const sc={};MEMBERS.forEach(m=>sc[m]=0);
   DATA.forEach(sec=>{
     txt+=`\n## ${sec.icon} ${sec.title}\n`;
     sec.subs.forEach((sub,si)=>{
@@ -500,14 +739,12 @@ function setSync(state,label){
   document.getElementById('syncDot').className='sync-dot'+(state==='connected'?' connected':state==='error'?' error':'');
   document.getElementById('syncLabel').textContent=label;
 }
-
 let toastT;
 function showToast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3500);
 }
 window.showToast=showToast;
-
 function confetti(){
   const cols=['#00e5ff','#8b5cf6','#10b981','#f59e0b','#ef4444','#fff'];
   for(let i=0;i<80;i++)setTimeout(()=>{
@@ -518,16 +755,15 @@ function confetti(){
 }
 
 /* ══════════ INIT ══════════ */
-const savedMe = localStorage.getItem('yplaza-me');
+const savedMe=localStorage.getItem('yplaza-me');
 if(savedMe) setMe(savedMe);
-
-const savedUrl = localStorage.getItem('yplaza-dbUrl');
-if(savedUrl) {
+const savedUrl=localStorage.getItem('yplaza-dbUrl');
+if(savedUrl){
   document.getElementById('setupBanner').style.display='none';
   startFirebase(savedUrl);
-} else {
+}else{
   setSync('','Configure Firebase ↑');
-  checks={}; render();
+  checks={};render();
 }
 </script>
 </body>
