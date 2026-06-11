@@ -334,6 +334,20 @@ h1 em{color:var(--cyan);font-style:normal}
     </div>
   </div>
 </div>
+
+<!-- MODAL DEADLINES -->
+<div class="overlay" id="overlayDeadline" onclick="closeDeadlineModal(event)">
+  <div class="modal">
+    <div class="modal-title" id="deadlineModalTitle">📅 Éditer deadline</div>
+    <div class="modal-task" id="deadlineModalTask"></div>
+    <div class="modal-label">Nouvelle date (YYYY-MM-DD)</div>
+    <input type="date" id="deadlineInput" style="font-family:var(--font-m);font-size:12px;background:var(--surface3);border:1px solid var(--border2);color:var(--text);padding:10px 14px;border-radius:4px;width:100%;margin-bottom:20px"/>
+    <div class="modal-actions">
+      <button class="modal-cancel"  onclick="closeDeadlineModal()">Annuler</button>
+      <button class="modal-confirm" onclick="doSaveDeadline()">Sauvegarder ✓</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script type="module">
@@ -430,7 +444,7 @@ let chartInstance=null, chartOpen=false, prioOpen=false, deadlinesOpen=false;
 const iid=(s,si,ii)=>`${s}__${si}__${ii}`;
 
 /* ══════════ DEADLINES ══════════ */
-const DEADLINES={
+const DEFAULT_DEADLINES={
   "conception__0__0":"2026-06-15",
   "conception__0__1":"2026-06-18",
   "conception__0__2":"2026-06-20",
@@ -441,6 +455,19 @@ const DEADLINES={
   "backend__0__0":"2026-06-30",
   "frontend__0__0":"2026-07-05"
 };
+let DEADLINES={...DEFAULT_DEADLINES};
+
+function loadDeadlines(){
+  const saved=localStorage.getItem('yplaza-deadlines');
+  if(saved) DEADLINES={...DEFAULT_DEADLINES,...JSON.parse(saved)};
+}
+function saveDeadlines(){
+  const custom={};
+  Object.entries(DEADLINES).forEach(([k,v])=>{
+    if(v!==DEFAULT_DEADLINES[k]) custom[k]=v;
+  });
+  if(Object.keys(custom).length>0) localStorage.setItem('yplaza-deadlines',JSON.stringify(custom));
+}
 
 function getDeadlineStatus(dateStr){
   if(!dateStr) return {status:'none',label:'Pas de deadline',icon:'🔵',color:'var(--muted)'};
@@ -702,7 +729,7 @@ function renderDeadlines(){
     el.style.cssText=`background:${item.done?'var(--surface2)':bgColors[item.deadlineStatus.status]};border-color:${item.done?'var(--border)':borderColors[item.deadlineStatus.status]}`;
     el.innerHTML=`
       <div class="prio-num" style="background:${item.deadlineStatus.color}22;color:${item.deadlineStatus.color};border:1px solid ${item.deadlineStatus.color}44">${idx+1}</div>
-      <div class="prio-text">${item.text}${item.done&&item.ck?'<span style="font-size:9px;color:var(--muted)">— '+DISPLAY[item.ck.m]+'</span>':''}<br><span style="font-size:9px;color:${item.deadlineStatus.color}">${item.deadlineStatus.icon} ${item.deadline} (${item.deadlineStatus.label})</span></div>
+      <div class="prio-text">${item.text}${item.done&&item.ck?'<span style="font-size:9px;color:var(--muted)">— '+DISPLAY[item.ck.m]+'</span>':''}<br><span style="font-size:9px;color:${item.deadlineStatus.color};cursor:pointer;" onclick="openDeadlineModal('${item.id}','${item.text.replace(/'/g,"\\'")}','${item.deadline}')">${item.deadlineStatus.icon} ${item.deadline} (${item.deadlineStatus.label}) <strong style="color:var(--cyan)">✏️ Éditer</strong></span></div>
       <div class="prio-section"><span class="sec-tag tag-${item.tag}" style="display:inline-block">${item.tag.toUpperCase()}</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">${item.section}</span></div>`;
     list.appendChild(el);
   });
@@ -808,6 +835,34 @@ function closeModal(e){
   pendingId=null;
 }
 window.closeModal=closeModal;
+
+let pendingDeadlineId=null;
+function openDeadlineModal(id,taskText,currentDate){
+  pendingDeadlineId=id;
+  document.getElementById('deadlineModalTitle').textContent='📅 Éditer deadline';
+  document.getElementById('deadlineModalTask').textContent=taskText;
+  document.getElementById('deadlineInput').value=currentDate||'';
+  document.getElementById('overlayDeadline').classList.add('show');
+}
+window.openDeadlineModal=openDeadlineModal;
+
+function closeDeadlineModal(e){
+  if(e&&e.target!==document.getElementById('overlayDeadline'))return;
+  document.getElementById('overlayDeadline').classList.remove('show');
+  pendingDeadlineId=null;
+}
+window.closeDeadlineModal=closeDeadlineModal;
+
+function doSaveDeadline(){
+  const date=document.getElementById('deadlineInput').value;
+  if(!date){showToast('⚠️ Entre une date !');return;}
+  DEADLINES[pendingDeadlineId]=date;
+  saveDeadlines();
+  closeDeadlineModal();
+  render();
+  showToast('✅ Deadline mise à jour !');
+}
+window.doSaveDeadline=doSaveDeadline;
 
 function toggleSec(id){document.querySelector(`.section[data-id="${id}"]`).classList.toggle('collapsed');}
 window.toggleSec=toggleSec;
