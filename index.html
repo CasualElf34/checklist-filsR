@@ -461,6 +461,7 @@ function connectFirebase(){
   startFirebase(url);
 }
 window.connectFirebase=connectFirebase;
+window.startFirebase=startFirebase;
 
 function startFirebase(databaseURL){
   try{
@@ -479,7 +480,7 @@ function startFirebase(databaseURL){
   }catch(e){setSync('error','Config invalide');showToast('❌ '+e.message);}
 }
 
-function resetConfig(){localStorage.removeItem('yplaza-dbUrl');document.getElementById('setupBanner').style.display='block';showToast('⚙️ Config réinitialisée');}
+function resetConfig(){localStorage.removeItem('yplaza-dbUrl');location.reload();}
 window.resetConfig=resetConfig;
 
 /* ══════════ RENDER ══════════ */
@@ -566,6 +567,7 @@ function toggleChart(){
   if(chartOpen) renderChart();
 }
 window.toggleChart=toggleChart;
+window.toggleDeadlines=toggleDeadlines;
 
 function renderChart(){
   const total=DATA.reduce((a,s)=>a+s.subs.reduce((b,ss)=>b+ss.items.length,0),0);
@@ -700,7 +702,7 @@ function renderDeadlines(){
     el.style.cssText=`background:${item.done?'var(--surface2)':bgColors[item.deadlineStatus.status]};border-color:${item.done?'var(--border)':borderColors[item.deadlineStatus.status]}`;
     el.innerHTML=`
       <div class="prio-num" style="background:${item.deadlineStatus.color}22;color:${item.deadlineStatus.color};border:1px solid ${item.deadlineStatus.color}44">${idx+1}</div>
-      <div class="prio-text">${item.text}${item.done&&item.ck?` <span style="font-size:9px;color:var(--muted)">— ${DISPLAY[item.ck.m]}</span>':''}<br><span style="font-size:9px;color:${item.deadlineStatus.color}">${item.deadlineStatus.icon} ${item.deadline} (${item.deadlineStatus.label})</span></div>
+      <div class="prio-text">${item.text}${item.done&&item.ck?'<span style="font-size:9px;color:var(--muted)">— '+DISPLAY[item.ck.m]+'</span>':''}<br><span style="font-size:9px;color:${item.deadlineStatus.color}">${item.deadlineStatus.icon} ${item.deadline} (${item.deadlineStatus.label})</span></div>
       <div class="prio-section"><span class="sec-tag tag-${item.tag}" style="display:inline-block">${item.tag.toUpperCase()}</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">${item.section}</span></div>`;
     list.appendChild(el);
   });
@@ -714,6 +716,7 @@ function togglePrio(){
   if(prioOpen) renderPrio();
 }
 window.togglePrio=togglePrio;
+window.toggleDeadlines=toggleDeadlines;
 
 function renderPrio(){
   const list=document.getElementById('prioList');
@@ -813,6 +816,8 @@ window.expandAll=expandAll;
 function collapseAll(){document.querySelectorAll('.section').forEach(s=>s.classList.add('collapsed'));}
 window.collapseAll=collapseAll;
 
+window.exportMd=exportMd;
+
 function exportMd(){
   let txt='# Y-Plaza — Checklist Projet B2\n';
   const sc={};MEMBERS.forEach(m=>sc[m]=0);
@@ -834,7 +839,6 @@ function exportMd(){
   a.download='checklist-yplaza.md';a.click();
   showToast('⬇ Export téléchargé !');
 }
-window.exportMd=exportMd;
 
 /* ══════════ UTILS ══════════ */
 function setSync(state,label){
