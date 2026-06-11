@@ -216,6 +216,12 @@ h1 em{color:var(--cyan);font-style:normal}
 .modal-uncheck{font-family:var(--font-m);font-size:11px;padding:9px 18px;background:transparent;border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:3px;cursor:pointer;transition:all .2s;margin-right:auto}
 .modal-uncheck:hover{background:rgba(239,68,68,.1)}
 
+.deadline-badge {
+  cursor: pointer;
+  background: transparent;
+  font: inherit;
+}
+
 /* TOAST */
 .toast{position:fixed;bottom:28px;right:28px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--font-h);font-size:13px;font-weight:600;padding:12px 20px;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);z-index:200;pointer-events:none;max-width:300px}
 .toast.show{transform:none;opacity:1}
@@ -551,7 +557,9 @@ function renderChecklist(){
                   <div class="item-meta">
                     ${ck?`<span class="item-chip chip-${ck.m}">${DISPLAY[ck.m]||ck.m}</span>
                     <span class="item-date">📅 ${ck.d}</span>`:''}
-                    ${dl?`<span class="deadline-badge deadline-${ds.status}" title="${dl}">${ds.icon} ${ds.label}</span>`:''}
+                   ${dl?`<button class="deadline-badge deadline-${ds.status}" type="button" 
+                   onclick="openDeadlineModal('${id}', '${item.replace(/'/g,'\\\'')}', '${dl}')" 
+                   title="${dl}">${ds.icon} ${ds.label}</button>`:''}
                   </div>
                 </div>
               </div>`;
