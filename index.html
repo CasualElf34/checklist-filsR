@@ -65,11 +65,9 @@ h1 em{color:var(--cyan);font-style:normal}
   border-radius:6px;padding:14px 20px;margin-bottom:20px;flex-wrap:wrap}
 .who-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .member-btn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:7px 16px;border-radius:4px;cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
-.member-btn[data-m="Lucas"]{color:#00e5ff;border-color:rgba(0,229,255,.3)}
 .member-btn[data-m="Mael"]{color:#8b5cf6;border-color:rgba(139,92,246,.3)}
 .member-btn[data-m="Maxime"]{color:#10b981;border-color:rgba(16,185,129,.3)}
 .member-btn[data-m="Anthony"]{color:#f59e0b;border-color:rgba(245,158,11,.3)}
-.member-btn.active[data-m="Lucas"]{background:rgba(0,229,255,.15);border-color:#00e5ff;box-shadow:0 0 14px rgba(0,229,255,.2)}
 .member-btn.active[data-m="Mael"]{background:rgba(139,92,246,.15);border-color:#8b5cf6;box-shadow:0 0 14px rgba(139,92,246,.2)}
 .member-btn.active[data-m="Maxime"]{background:rgba(16,185,129,.15);border-color:#10b981;box-shadow:0 0 14px rgba(16,185,129,.2)}
 .member-btn.active[data-m="Anthony"]{background:rgba(245,158,11,.15);border-color:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.2)}
@@ -122,6 +120,11 @@ h1 em{color:var(--cyan);font-style:normal}
   padding:24px;margin-bottom:20px;display:none;
 }
 #prioPanel.open{display:block}
+#deadlinesPanel{
+  background:var(--surface);border:1px solid var(--border2);border-radius:6px;
+  padding:24px;margin-bottom:20px;display:none;
+}
+#deadlinesPanel.open{display:block}
 .prio-title{font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:2px;
   text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:10px}
 .prio-title span{color:#fff}
@@ -179,10 +182,14 @@ h1 em{color:var(--cyan);font-style:normal}
 .item.done .item-text{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(90,90,128,.5)}
 .item-meta{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap}
 .item-chip{font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:10px;border:1px solid;text-transform:uppercase}
-.chip-Lucas{color:#00e5ff;border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08)}
 .chip-Mael{color:#8b5cf6;border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.08)}
 .chip-Maxime{color:#10b981;border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
 .chip-Anthony{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08)}
+.deadline-badge{font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:10px;border:1px solid;text-transform:uppercase}
+.deadline-ontime{color:#10b981;border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
+.deadline-soon{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08)}
+.deadline-overdue{color:#ef4444;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08)}
+.deadline-none{color:#5a5a80;border-color:rgba(90,90,128,.2);background:transparent}
 .item-date{font-size:9px;color:var(--muted)}
 
 /* MODAL */
@@ -195,11 +202,9 @@ h1 em{color:var(--cyan);font-style:normal}
 .modal-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .modal-members{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
 .modal-mbtn{font-family:var(--font-m);font-size:12px;font-weight:700;padding:10px 20px;border-radius:4px;cursor:pointer;border:1.5px solid;transition:all .2s;background:transparent}
-.modal-mbtn[data-m="Lucas"]{color:#00e5ff;border-color:rgba(0,229,255,.3)}
 .modal-mbtn[data-m="Mael"]{color:#8b5cf6;border-color:rgba(139,92,246,.3)}
 .modal-mbtn[data-m="Maxime"]{color:#10b981;border-color:rgba(16,185,129,.3)}
 .modal-mbtn[data-m="Anthony"]{color:#f59e0b;border-color:rgba(245,158,11,.3)}
-.modal-mbtn.sel[data-m="Lucas"]{background:rgba(0,229,255,.15);border-color:#00e5ff}
 .modal-mbtn.sel[data-m="Mael"]{background:rgba(139,92,246,.15);border-color:#8b5cf6}
 .modal-mbtn.sel[data-m="Maxime"]{background:rgba(16,185,129,.15);border-color:#10b981}
 .modal-mbtn.sel[data-m="Anthony"]{background:rgba(245,158,11,.15);border-color:#f59e0b}
@@ -257,7 +262,6 @@ h1 em{color:var(--cyan);font-style:normal}
 
   <div class="who-bar">
     <span class="who-label">Tu es :</span>
-    <button class="member-btn" data-m="Lucas"   onclick="setMe('Lucas')">Lucas</button>
     <button class="member-btn" data-m="Mael"    onclick="setMe('Mael')">Maël</button>
     <button class="member-btn" data-m="Maxime"  onclick="setMe('Maxime')">Maxime</button>
     <button class="member-btn" data-m="Anthony" onclick="setMe('Anthony')">Anthony</button>
@@ -281,6 +285,7 @@ h1 em{color:var(--cyan);font-style:normal}
     <button class="btn" onclick="collapseAll()">▲ Tout replier</button>
     <button class="btn" id="btnChart" onclick="toggleChart()">📈 Graphique</button>
     <button class="btn" id="btnPrio"  onclick="togglePrio()">🎯 Priorités</button>
+    <button class="btn" id="btnDeadlines" onclick="toggleDeadlines()">📅 Deadlines</button>
     <button class="btn" onclick="exportMd()">⬇ Exporter</button>
     <button class="btn" onclick="resetConfig()" style="margin-left:auto;color:rgba(239,68,68,.5);border-color:rgba(239,68,68,.2)">⚙️ Config</button>
   </div>
@@ -300,6 +305,14 @@ h1 em{color:var(--cyan);font-style:normal}
     <div class="prio-list" id="prioList"></div>
   </div>
 
+  <!-- DEADLINES PANEL -->
+  <div id="deadlinesPanel">
+    <div class="prio-title">📅 <span>Suivi des deadlines</span></div>
+    <p class="prio-subtitle">Tâches organisées par urgence · 🔴 Retard · 🟡 Urgent (< 7 jours) · 🟢 À venir</p>
+    <div class="prio-list" id="deadlinesList"></div>
+  </div>
+  </div>
+
   <div id="checklist"><div class="loading"><div class="spinner"></div>En attente de Firebase…</div></div>
 </div>
 
@@ -310,7 +323,6 @@ h1 em{color:var(--cyan);font-style:normal}
     <div class="modal-task" id="modalTask"></div>
     <div class="modal-label">Qui a fait cette tâche ?</div>
     <div class="modal-members">
-      <button class="modal-mbtn" data-m="Lucas"   onclick="selM('Lucas')">Lucas</button>
       <button class="modal-mbtn" data-m="Mael"    onclick="selM('Mael')">Maël</button>
       <button class="modal-mbtn" data-m="Maxime"  onclick="selM('Maxime')">Maxime</button>
       <button class="modal-mbtn" data-m="Anthony" onclick="selM('Anthony')">Anthony</button>
@@ -407,15 +419,39 @@ const PRIO_COLORS = {1:"#ef4444",2:"#f59e0b",3:"#00e5ff",4:"#8b5cf6"};
 const PRIO_BG     = {1:"rgba(239,68,68,.08)",2:"rgba(245,158,11,.08)",3:"rgba(0,229,255,.06)",4:"rgba(139,92,246,.06)"};
 const PRIO_BORDER = {1:"rgba(239,68,68,.25)",2:"rgba(245,158,11,.25)",3:"rgba(0,229,255,.2)",4:"rgba(139,92,246,.2)"};
 
-const MEMBERS=["Lucas","Mael","Maxime","Anthony"];
-const COLORS={Lucas:"#00e5ff",Mael:"#8b5cf6",Maxime:"#10b981",Anthony:"#f59e0b"};
-const INIT={Lucas:"LU",Mael:"MA",Maxime:"MX",Anthony:"AN"};
-const MEDALS=["🥇","🥈","🥉","4️⃣"];
-const DISPLAY={Lucas:"Lucas",Mael:"Maël",Maxime:"Maxime",Anthony:"Anthony"};
+const MEMBERS=["Mael","Maxime","Anthony"];
+const COLORS={Mael:"#8b5cf6",Maxime:"#10b981",Anthony:"#f59e0b"};
+const INIT={Mael:"MA",Maxime:"MX",Anthony:"AN"};
+const MEDALS=["🥇","🥈","🥉"];
+const DISPLAY={Mael:"Maël",Maxime:"Maxime",Anthony:"Anthony"};
 
 let checks={}, me=null, pendingId=null, pendingMember=null, db=null;
-let chartInstance=null, chartOpen=false, prioOpen=false;
+let chartInstance=null, chartOpen=false, prioOpen=false, deadlinesOpen=false;
 const iid=(s,si,ii)=>`${s}__${si}__${ii}`;
+
+/* ══════════ DEADLINES ══════════ */
+const DEADLINES={
+  "conception__0__0":"2026-06-15",
+  "conception__0__1":"2026-06-18",
+  "conception__0__2":"2026-06-20",
+  "conception__1__0":"2026-06-22",
+  "bdd__0__0":"2026-06-25",
+  "bdd__0__1":"2026-06-25",
+  "bdd__1__0":"2026-06-28",
+  "backend__0__0":"2026-06-30",
+  "frontend__0__0":"2026-07-05"
+};
+
+function getDeadlineStatus(dateStr){
+  if(!dateStr) return {status:'none',label:'Pas de deadline',icon:'🔵',color:'var(--muted)'};
+  const today=new Date();today.setHours(0,0,0,0);
+  const deadline=new Date(dateStr);deadline.setHours(0,0,0,0);
+  const diff=Math.floor((deadline-today)/(1000*60*60*24));
+  
+  if(diff<0) return {status:'overdue',label:`${Math.abs(diff)}j en retard`,icon:'🔴',color:'#ef4444'};
+  if(diff<=7) return {status:'soon',label:`${diff}j restant${diff>1?'s':''}`,icon:'🟡',color:'#f59e0b'};
+  return {status:'ontime',label:`${diff}j restant${diff>1?'s':''}`,icon:'🟢',color:'#10b981'};
+}
 
 /* ══════════ FIREBASE ══════════ */
 function connectFirebase(){
@@ -453,6 +489,7 @@ function render(){
   renderGlobal();
   if(chartOpen) renderChart();
   if(prioOpen)  renderPrio();
+  if(deadlinesOpen) renderDeadlines();
 }
 
 function renderChecklist(){
@@ -478,15 +515,16 @@ function renderChecklist(){
           <div class="subsec">
             <div class="subsec-title">${sub.title}</div>
             ${sub.items.map((item,ii)=>{
-              const id=iid(sec.id,si,ii);const ck=checks[id];
+              const id=iid(sec.id,si,ii);const ck=checks[id];const dl=DEADLINES[id];const ds=getDeadlineStatus(dl);
               return `<div class="item${ck?' done':''}" onclick="clickItem('${sec.id}',${si},${ii})">
                 <div class="chkbox">${ck?'✓':''}</div>
                 <div class="item-right">
                   <div class="item-text">${item}</div>
-                  ${ck?`<div class="item-meta">
-                    <span class="item-chip chip-${ck.m}">${DISPLAY[ck.m]||ck.m}</span>
-                    <span class="item-date">📅 ${ck.d}</span>
-                  </div>`:''}
+                  <div class="item-meta">
+                    ${ck?`<span class="item-chip chip-${ck.m}">${DISPLAY[ck.m]||ck.m}</span>
+                    <span class="item-date">📅 ${ck.d}</span>`:''}
+                    ${dl?`<span class="deadline-badge deadline-${ds.status}" title="${dl}">${ds.icon} ${ds.label}</span>`:''}
+                  </div>
                 </div>
               </div>`;
             }).join('')}
@@ -606,6 +644,68 @@ function renderChart(){
   });
 }
 
+/* ══════════ DEADLINES PANEL ══════════ */
+function toggleDeadlines(){
+  deadlinesOpen=!deadlinesOpen;
+  document.getElementById('deadlinesPanel').classList.toggle('open',deadlinesOpen);
+  document.getElementById('btnDeadlines').classList.toggle('active-btn',deadlinesOpen);
+  if(deadlinesOpen) renderDeadlines();
+}
+window.toggleDeadlines=toggleDeadlines;
+
+function renderDeadlines(){
+  const list=document.getElementById('deadlinesList');
+  list.innerHTML='';
+
+  // Collecte toutes les tâches avec deadlines
+  const items=[];
+  DATA.forEach(sec=>{
+    sec.subs.forEach((sub,si)=>{
+      sub.items.forEach((item,ii)=>{
+        const id=iid(sec.id,si,ii);
+        const deadline=DEADLINES[id];
+        if(deadline){
+          const done=!!checks[id];
+          const ck=checks[id];
+          const deadlineStatus=getDeadlineStatus(deadline);
+          items.push({
+            id, text:item, section:`${sec.icon} ${sec.title}`, tag:sec.tag,
+            deadline, deadlineStatus, done, ck
+          });
+        }
+      });
+    });
+  });
+
+  // Trie par urgence: En retard → Urgent → À venir
+  const order={overdue:0, soon:1, ontime:2, none:3};
+  items.sort((a,b)=>order[a.deadlineStatus.status]-order[b.deadlineStatus.status] || new Date(a.deadline)-new Date(b.deadline));
+
+  // Affiche par section de deadline
+  let lastStatus='';
+  items.forEach((item,idx)=>{
+    if(item.deadlineStatus.status!==lastStatus){
+      lastStatus=item.deadlineStatus.status;
+      const sep=document.createElement('div');
+      const labels={overdue:'🔴 EN RETARD',soon:'🟡 URGENT (< 7 jours)',ontime:'🟢 À VENIR',none:'🔵 SANS DEADLINE'};
+      const colors={overdue:'#ef4444',soon:'#f59e0b',ontime:'#10b981',none:'#5a5a80'};
+      sep.style.cssText=`font-size:10px;letter-spacing:2px;text-transform:uppercase;color:${colors[item.deadlineStatus.status]};padding:12px 0 6px;font-family:var(--font-h);font-weight:700`;
+      sep.textContent=labels[item.deadlineStatus.status];
+      list.appendChild(sep);
+    }
+    const el=document.createElement('div');
+    el.className='prio-item'+(item.done?' done-item':'');
+    const bgColors={overdue:'rgba(239,68,68,.08)',soon:'rgba(245,158,11,.08)',ontime:'rgba(16,185,129,.08)',none:'transparent'};
+    const borderColors={overdue:'rgba(239,68,68,.25)',soon:'rgba(245,158,11,.25)',ontime:'rgba(16,185,129,.25)',none:'var(--border)'};
+    el.style.cssText=`background:${item.done?'var(--surface2)':bgColors[item.deadlineStatus.status]};border-color:${item.done?'var(--border)':borderColors[item.deadlineStatus.status]}`;
+    el.innerHTML=`
+      <div class="prio-num" style="background:${item.deadlineStatus.color}22;color:${item.deadlineStatus.color};border:1px solid ${item.deadlineStatus.color}44">${idx+1}</div>
+      <div class="prio-text">${item.text}${item.done&&item.ck?` <span style="font-size:9px;color:var(--muted)">— ${DISPLAY[item.ck.m]}</span>':''}<br><span style="font-size:9px;color:${item.deadlineStatus.color}">${item.deadlineStatus.icon} ${item.deadline} (${item.deadlineStatus.label})</span></div>
+      <div class="prio-section"><span class="sec-tag tag-${item.tag}" style="display:inline-block">${item.tag.toUpperCase()}</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">${item.section}</span></div>`;
+    list.appendChild(el);
+  });
+}
+
 /* ══════════ PRIORITÉS ══════════ */
 function togglePrio(){
   prioOpen=!prioOpen;
@@ -626,11 +726,13 @@ function renderPrio(){
     const id=iid(p.sid,p.si,p.ii);
     const done=!!checks[id];
     const ck=checks[id];
+    const deadline=DEADLINES[id];
+    const deadlineStatus=getDeadlineStatus(deadline);
     return {
       idx:idx+1, text:sec.subs[p.si].items[p.ii],
       section:`${sec.icon} ${sec.title}`,
       tag:sec.tag, prio:p.prio, label:p.label,
-      done, ck
+      done, ck, deadline, deadlineStatus
     };
   }).filter(Boolean);
 
@@ -650,7 +752,7 @@ function renderPrio(){
     el.style.cssText=`background:${item.done?'var(--surface2)':PRIO_BG[item.prio]};border-color:${item.done?'var(--border)':PRIO_BORDER[item.prio]}`;
     el.innerHTML=`
       <div class="prio-num" style="background:${PRIO_COLORS[item.prio]}22;color:${PRIO_COLORS[item.prio]};border:1px solid ${PRIO_COLORS[item.prio]}44">${item.done?'✓':item.idx}</div>
-      <div class="prio-text">${item.text}${item.done&&item.ck?` <span style="font-size:9px;color:var(--muted)">— ${DISPLAY[item.ck.m]||item.ck.m}</span>`:''}</div>
+      <div class="prio-text">${item.text}${item.done&&item.ck?` <span style="font-size:9px;color:var(--muted)">— ${DISPLAY[item.ck.m]||item.ck.m}</span>`:''}${item.deadline?` <span style="font-size:9px;color:${item.deadlineStatus.color}">${item.deadlineStatus.icon} ${item.deadlineStatus.label}</span>`:''}</div>
       <div class="prio-section"><span class="sec-tag tag-${item.tag}" style="display:inline-block">${item.tag.toUpperCase()}</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">${item.section}</span></div>`;
     list.appendChild(el);
   });
